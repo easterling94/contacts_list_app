@@ -2,7 +2,8 @@ import styles from './home.module.scss';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { ContactListSlice } from '../../services/reducers/contact-list';
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import { IUserContacts } from '../../types/data';
 
 const ContactsList = () => {
   const width = useAppSelector((state) => state.drag.width);
@@ -67,7 +68,18 @@ const DragBar = () => {
 
 export const ContactInfo = () => {
   const contacts = useAppSelector((state) => state.user.user?.contacts);
-  return <div>Contact info</div>;
+  const { pathname } = useLocation();
+  const path = pathname.slice(11);
+  let contact: IUserContacts | undefined = contacts?.filter(
+    (el) => el.id === path
+  )[0];
+
+  return (
+    <section>
+      <h1>{contact?.name}</h1>
+      <h2>{contact?.phone}</h2>
+    </section>
+  );
 };
 
 export const HomePage = () => {

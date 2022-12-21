@@ -1,11 +1,13 @@
-export interface IUser {
-  id: number;
+export interface IUserContacts {
+  id: string,
   name: string;
-  contacts: {
-    id: number,
-    name: string;
-    phone: string;
-  }[]
+  phone: string;
+}
+
+export interface IUser {
+  id: string;
+  name: string;
+  contacts: IUserContacts[];
 }
 
 export interface IData {

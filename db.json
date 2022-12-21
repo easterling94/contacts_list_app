@@ -3,26 +3,26 @@
     "status": "ok",
     "data": [
       {
-        "id": 1,
+        "id": "1",
         "name": "Brad",
         "contacts": [
           {
-            "id": 1,
+            "id": "1",
             "name": "Tina",
             "phone": "123-12-12"
           },
           {
-            "id": 2,
+            "id": "2",
             "name": "XAEA12",
             "phone": "234-45-45"
           },
           {
-            "id": 3,
+            "id": "3",
             "name": "Iron Man",
             "phone": "666-69-69"
           },
           {
-            "id": 4,
+            "id": "4",
             "name": "Boss",
             "phone": "999-99-99"
           }
