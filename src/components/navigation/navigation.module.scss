@@ -1,0 +1,15 @@
+.navigation {
+  background-color: grey;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px 100px;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  &:hover {
+    background-color: rgb(166, 166, 168);
+  }
+}

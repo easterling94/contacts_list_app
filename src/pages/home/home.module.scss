@@ -1,0 +1,47 @@
+$navBackground: rgb(219, 219, 219);
+$navActive: rgb(255,255,255);
+$navHover: rgba(245,245,215, 0.8);
+
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 58px);
+}
+
+.contactList {
+  max-width: 40vw;
+  min-width: 25vw;
+  background-color: $navBackground;
+  overflow: auto;
+  & ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  & li {
+    margin: 10px;
+  }
+  & a {
+    text-decoration: none;
+    font-size: 1.2em;
+    border: 1px solid $navBackground;
+    border-radius: 5px;
+    display: flex;
+    padding: 0.5rem;
+    color: black;
+    &:hover {
+      background-color: $navHover;
+      border: 1px solid $navHover;
+    }
+  }
+}
+
+.drag {
+  border-left: 2px solid black;
+  cursor: e-resize;
+}
+
+.active {
+  background-color: $navActive;
+}

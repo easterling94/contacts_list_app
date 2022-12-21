@@ -1,0 +1,25 @@
+$noHover: rgb(40, 168, 40);
+$withHover: rgb(33, 143, 33);
+
+@mixin transition($x...) {
+  transition: $x;
+}
+
+.btn {
+  width: 100px;
+  margin: 10px auto 0px;
+  height: 40px;
+  background-color: $noHover;
+  color: white;
+  font-weight: 700;
+  border: 0px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 0px 2px 2px white;
+  @include transition(box-shadow 1s ease-out, background-color 1s ease-out) ;
+
+  &:hover{
+    background-color: $withHover;
+    box-shadow: 0px 0px 2px 2px $withHover;
+  }
+}
