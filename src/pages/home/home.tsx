@@ -2,7 +2,7 @@ import styles from './home.module.scss';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { ContactListSlice } from '../../services/reducers/contact-list';
-import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import { Outlet, NavLink, useParams } from 'react-router-dom';
 import { IUserContacts } from '../../types/data';
 
 const ContactsList = () => {
@@ -16,7 +16,7 @@ const ContactsList = () => {
           contacts.map((el) => (
             <li key={el.phone}>
               <NavLink
-                to={`home/${el.id}`}
+                to={`/home/${el.id}`}
                 className={({ isActive }) =>
                   isActive ? `${styles.active}` : undefined
                 }
@@ -68,10 +68,9 @@ const DragBar = () => {
 
 export const ContactInfo = () => {
   const contacts = useAppSelector((state) => state.user.user?.contacts);
-  const { pathname } = useLocation();
-  const path = pathname.slice(11);
+  const userId = useParams();
   let contact: IUserContacts | undefined = contacts?.filter(
-    (el) => el.id === path
+    (el) => el.id === userId.contactId
   )[0];
 
   return (

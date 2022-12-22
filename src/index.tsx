@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ErrorPage } from './pages/error-page/error-page';
 import { HomePage } from './pages/home/home';
 import { LoginPage } from './pages/login';
+import { WelcomePage } from './pages/welcome-page';
 import { ContactInfo } from './pages/home/home';
 import { store } from './services/store';
 import { Provider } from 'react-redux';
@@ -20,11 +21,15 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '/home',
+        index: true,
+        element: <WelcomePage />,
+      },
+      {
+        path: 'home/',
         element: <HomePage />,
         children: [
           {
-            path: 'home/:contactId',
+            path: ':contactId',
             element: <ContactInfo />,
           },
         ],
