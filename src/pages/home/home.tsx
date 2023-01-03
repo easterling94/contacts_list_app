@@ -77,6 +77,14 @@ export const ContactInfo = () => {
     <section>
       <h1>{contact?.name}</h1>
       <h2>{contact?.phone}</h2>
+      <div className={styles.buttons}>
+        <button className={styles.edit} type='submit'>
+          Изменить
+        </button>
+        <button className={styles.delete} type='submit'>
+          Удалить
+        </button>
+      </div>
     </section>
   );
 };
