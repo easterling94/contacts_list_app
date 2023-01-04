@@ -46,6 +46,10 @@ $navHover: rgba(245,245,215, 0.8);
   background-color: $navActive;
 }
 
+.section {
+  margin-left: 15px;
+}
+
 .buttons {
   display: flex;
   flex-direction: row;

@@ -74,7 +74,7 @@ export const ContactInfo = () => {
   )[0];
 
   return (
-    <section>
+    <section className={styles.section}>
       <h1>{contact?.name}</h1>
       <h2>{contact?.phone}</h2>
       <div className={styles.buttons}>
