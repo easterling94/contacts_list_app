@@ -1,5 +1,3 @@
-import { IUser } from '../types/data';
-
 const BASE_URL = 'http://localhost:5001';
 const URL_USERS = BASE_URL + '/users';
 

@@ -78,7 +78,11 @@ export const ContactInfo = () => {
       <h1>{contact?.name}</h1>
       <h2>{contact?.phone}</h2>
       <div className={styles.buttons}>
-        <button className={styles.edit} type='submit'>
+        <button
+          className={styles.edit}
+          type='submit'
+          onClick={() => console.log(userId)}
+        >
           Изменить
         </button>
         <button className={styles.delete} type='submit'>
