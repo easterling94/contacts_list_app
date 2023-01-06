@@ -2,12 +2,20 @@ import { FC } from 'react';
 import { IOverlay } from '../../types/overlay';
 import styles from './modal.module.css';
 import { GrClose } from 'react-icons/gr';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { ModalSlice } from '../../services/reducers/modal';
 
 export const ModalOverlay: FC<IOverlay> = ({ children }) => {
+  const isModalOpened = useAppSelector((state) => state.modal.isModalOpened);
+  const dispatch = useAppDispatch();
+  const { closeModal } = ModalSlice.actions;
+  const handleClose = () => {
+    dispatch(closeModal());
+  };
   return (
     <div className={styles.background}>
       <div className={styles.wrapper}>
-        <div className={styles.closeIcon}>
+        <div className={styles.closeIcon} onClick={handleClose}>
           <GrClose />
         </div>
         {children}
