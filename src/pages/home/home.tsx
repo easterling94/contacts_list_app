@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { ContactListSlice } from '../../services/reducers/contact-list';
 import { Outlet, NavLink, useParams } from 'react-router-dom';
 import { IUserContacts } from '../../types/data';
+import { ModalSlice } from '../../services/reducers/modal';
+import { IModalDelete, IModalEdit } from '../../services/reducers/modal';
 
 const ContactsList = () => {
   const width = useAppSelector((state) => state.drag.width);
@@ -67,25 +69,42 @@ const DragBar = () => {
 };
 
 export const ContactInfo = () => {
+  const { openModal } = ModalSlice.actions;
   const contacts = useAppSelector((state) => state.user.user?.contacts);
+  const dispatch = useAppDispatch();
   const userId = useParams();
-  let contact: IUserContacts | undefined = contacts?.filter(
+  const contact: IUserContacts | undefined = contacts?.filter(
     (el) => el.id === userId.contactId
   )[0];
+
+  const handleEdit = () => {
+    const contactToEdit: IModalEdit = {
+      title: 'Внесите изменения в карточку',
+      data: {
+        name: contact?.name,
+        phone: contact?.phone,
+      },
+    };
+    dispatch(openModal(contactToEdit));
+  };
+
+  const handleDelete = () => {
+    const contactDelete: IModalDelete = {
+      title: 'Вы уверены, что хотите удалить данную запись?',
+      data: null,
+    };
+    dispatch(openModal(contactDelete));
+  };
 
   return (
     <section className={styles.section}>
       <h1>{contact?.name}</h1>
       <h2>{contact?.phone}</h2>
       <div className={styles.buttons}>
-        <button
-          className={styles.edit}
-          type='submit'
-          onClick={() => console.log(userId)}
-        >
+        <button className={styles.edit} type='submit' onClick={handleEdit}>
           Изменить
         </button>
-        <button className={styles.delete} type='submit'>
+        <button className={styles.delete} type='submit' onClick={handleDelete}>
           Удалить
         </button>
       </div>

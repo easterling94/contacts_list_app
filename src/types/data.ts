@@ -17,7 +17,3 @@ export interface IData {
   userDataSuccess: boolean;
   userDataError: boolean;
 }
-
-export interface IDBResponse {
-  
-}

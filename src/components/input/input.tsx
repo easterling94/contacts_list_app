@@ -1,9 +1,20 @@
 import React, { useState } from 'react';
-import { TInput } from '../../types/inputs';
 import styles from './input.module.css';
 
-export const Input: React.FC<TInput> = ({ placeholder, type, required }) => {
-  const [loginValue, setLoginValue] = useState<string>('');
+interface TInput {
+  type: string;
+  placeholder: string;
+  value: string | undefined;
+  required?: boolean;
+}
+
+export const Input: React.FC<TInput> = ({
+  placeholder,
+  type,
+  required,
+  value,
+}) => {
+  const [loginValue, setLoginValue] = useState(value);
   return (
     <input
       className={styles.input}

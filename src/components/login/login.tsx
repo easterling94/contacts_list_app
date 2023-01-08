@@ -10,8 +10,8 @@ export const Login = () => {
   };
   return (
     <form className={styles.form}>
-      <Input placeholder='Логин' type='text' />
-      <Input placeholder='Пароль' type='password' />
+      <Input placeholder='Логин' type='text' value='' />
+      <Input placeholder='Пароль' type='password' value='' />
       <Button buttonFunction={register} text='Далее' />
     </form>
   );
