@@ -16,7 +16,7 @@ export const ErrorPage: React.FC = () => {
           ''
         )}
         <Link to='/'>
-          <Button text='На главную' />
+          <Button text='На главную' type='submit' />
         </Link>
       </div>
     );

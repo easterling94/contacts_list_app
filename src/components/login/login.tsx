@@ -12,7 +12,7 @@ export const Login = () => {
     <form className={styles.form}>
       <Input placeholder='Логин' type='text' value='' />
       <Input placeholder='Пароль' type='password' value='' />
-      <Button buttonFunction={register} text='Далее' />
+      <Button buttonFunction={register} text='Далее' type='submit' />
     </form>
   );
 };

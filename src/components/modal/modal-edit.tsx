@@ -1,13 +1,13 @@
-import { ModalOverlay } from '../../components/modal/modal-overlay';
+import { useAppSelector } from '../../hooks/redux';
 import styles from './modal.module.css';
 import { Input } from '../input/input';
-import { useAppSelector } from '../../hooks/redux';
 import { Button } from '../button/button';
 
-export const Modal = () => {
-  const modalData = useAppSelector((state) => state.modal.modalData);
+const modalData = useAppSelector((state) => state.modal.modalData);
+
+export const ModalEdit = () => {
   return (
-    <ModalOverlay>
+    <>
       <div className={styles.header}>{modalData?.title}</div>
       {modalData?.data?.name ? (
         <Input
@@ -19,8 +19,10 @@ export const Modal = () => {
       ) : (
         ''
       )}
-      <Button text='Сбросить' />
-      <Button text='Сохранить' />
-    </ModalOverlay>
+      <div className={styles.btns}>
+        <Button text='Сбросить' type='cancel' />
+        <Button text='Сохранить' type='submit' />
+      </div>
+    </>
   );
 };

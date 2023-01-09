@@ -1,10 +1,29 @@
 import { FC } from 'react';
 import styles from './button.module.scss';
-import { IButton } from '../../types/button-form';
+import { SyntheticEvent } from 'react';
 
-export const Button: FC<IButton> = ({ buttonFunction, text }) => {
+interface IButton {
+  buttonFunction?: (e: SyntheticEvent) => void;
+  text: string;
+  type: 'cancel' | 'submit';
+}
+
+export const Button: FC<IButton> = ({ buttonFunction, text, type }) => {
   return (
-    <button className={styles.btn} onClick={buttonFunction}>
+    <button
+      className={
+        styles.btn +
+        ' ' +
+        `${
+          type === 'cancel'
+            ? styles.cancel
+            : type === 'submit'
+            ? styles.submit
+            : ''
+        }`
+      }
+      onClick={buttonFunction}
+    >
       {text}
     </button>
   );
