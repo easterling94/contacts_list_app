@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
+type TModalType = null | 'new' | 'edit' | 'delete';
+
 export interface IModalNew {
   title: string,
+  modalType: TModalType,
   data: {
     name: string,
     phone: string,
@@ -10,16 +13,19 @@ export interface IModalNew {
 
 export interface IModalDelete {
   title: string,
+  modalType: TModalType,
   data: null,
 };
 
 export interface IModalEdit {
   title: string,
+  modalType: TModalType,
   data: {
     name: string | undefined,
     phone: string | undefined,
   }
 }
+
 
 interface IInitialState {
   isModalOpened: boolean,

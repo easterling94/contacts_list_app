@@ -1,7 +1,6 @@
-$navBackground: rgb(219, 219, 219);
+$navBackground: rgb(111, 210, 223);
 $navActive: rgb(255,255,255);
 $navHover: rgba(245,245,215, 0.8);
-
 
 .wrapper {
   display: flex;
@@ -9,18 +8,29 @@ $navHover: rgba(245,245,215, 0.8);
   height: calc(100vh - 58px);
 }
 
-.contactList {
+.sectionLeft {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: $navBackground;
   max-width: 40vw;
   min-width: 25vw;
-  background-color: $navBackground;
+  padding: 10px;
+}
+
+.sectionRight {
+  margin-left: 15px;
+}
+
+.contactList {
   overflow: auto;
   & ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
   }
-  & li {
-    margin: 10px;
+  & li:nth-of-type(1n + 2) {
+    margin: 10px 0px;
   }
   & a {
     text-decoration: none;
@@ -46,41 +56,45 @@ $navHover: rgba(245,245,215, 0.8);
   background-color: $navActive;
 }
 
-.section {
-  margin-left: 15px;
+@mixin button {
+  font-size: 1rem;
+  font-family: inherit;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+  background-color: white;
+  line-height: 1.5;
+  margin: 0;
+  font-weight: 500;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(224, 224, 224);
+    box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.6), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+  }
+  &:active {
+    box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.4);
+    transform: translateY(1px);
+  }
 }
 
 .buttons {
   display: flex;
   flex-direction: row;
   gap: 10px;
-  & button {
-    font-size: 1rem;
-    font-family: inherit;
-    border: none;
-    border-radius: 8px;
-    padding: 0.5rem 0.75rem;
-    box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
-    background-color: white;
-    line-height: 1.5;
-    margin: 0;
-    font-weight: 500;
-    cursor: pointer;
-    &:hover {
-      background-color: rgb(224, 224, 224);
-      box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.6), 0 1px 2px hsla(0, 0%, 0%, 0.2);
-    }
-    &:active {
-      box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.4);
-      transform: translateY(1px);
-    }
-  }
 }
 
-.edit {
+.btnNew {
+  @include button();
+  color: #a80cb6;
+}
+
+.btnEdit {
+  @include button();
   color: #3992ff;
 }
 
-.delete {
+.btnDelete {
+  @include button();
   color: #ff394a;
 }

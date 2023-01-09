@@ -5,33 +5,59 @@ import { ContactListSlice } from '../../services/reducers/contact-list';
 import { Outlet, NavLink, useParams } from 'react-router-dom';
 import { IUserContacts } from '../../types/data';
 import { ModalSlice } from '../../services/reducers/modal';
-import { IModalDelete, IModalEdit } from '../../services/reducers/modal';
+import {
+  IModalDelete,
+  IModalEdit,
+  IModalNew,
+} from '../../services/reducers/modal';
+import { ModalOverlay } from '../../components/modal/modal-overlay';
+import { ModalDelete } from '../../components/modal/modal-delete';
+import { ModalEdit } from '../../components/modal/modal-edit';
+import { ModalNew } from '../../components/modal/modal-new';
 
 const ContactsList = () => {
   const width = useAppSelector((state) => state.drag.width);
   const contacts = useAppSelector((state) => state.user.user?.contacts);
+  const { openModal } = ModalSlice.actions;
+  const dispatch = useAppDispatch();
+  const handleNew = () => {
+    const contactNew: IModalNew = {
+      title: 'Новый контакт',
+      modalType: 'new',
+      data: {
+        name: '',
+        phone: '',
+      },
+    };
+    dispatch(openModal(contactNew));
+  };
 
   return (
-    <nav className={styles.contactList} style={{ width: width }}>
-      <ul>
-        {contacts?.length ? (
-          contacts.map((el) => (
-            <li key={el.phone}>
-              <NavLink
-                to={`/home/${el.id}`}
-                className={({ isActive }) =>
-                  isActive ? `${styles.active}` : undefined
-                }
-              >
-                {el.name}
-              </NavLink>
-            </li>
-          ))
-        ) : (
-          <p>Пока нет контактов</p>
-        )}
-      </ul>
-    </nav>
+    <section className={styles.sectionLeft} style={{ width: width }}>
+      <nav className={styles.contactList}>
+        <ul>
+          {contacts?.length ? (
+            contacts.map((el) => (
+              <li key={el.phone}>
+                <NavLink
+                  to={`/home/${el.id}`}
+                  className={({ isActive }) =>
+                    isActive ? `${styles.active}` : undefined
+                  }
+                >
+                  {el.name}
+                </NavLink>
+              </li>
+            ))
+          ) : (
+            <p>Пока нет контактов</p>
+          )}
+        </ul>
+      </nav>
+      <button className={styles.btnNew} onClick={handleNew}>
+        Новый контакт
+      </button>
+    </section>
   );
 };
 
@@ -80,6 +106,7 @@ export const ContactInfo = () => {
   const handleEdit = () => {
     const contactToEdit: IModalEdit = {
       title: 'Внесите изменения в карточку',
+      modalType: 'edit',
       data: {
         name: contact?.name,
         phone: contact?.phone,
@@ -91,20 +118,25 @@ export const ContactInfo = () => {
   const handleDelete = () => {
     const contactDelete: IModalDelete = {
       title: 'Вы уверены, что хотите удалить данную запись?',
+      modalType: 'delete',
       data: null,
     };
     dispatch(openModal(contactDelete));
   };
 
   return (
-    <section className={styles.section}>
+    <section className={styles.sectionRight}>
       <h1>{contact?.name}</h1>
       <h2>{contact?.phone}</h2>
       <div className={styles.buttons}>
-        <button className={styles.edit} type='submit' onClick={handleEdit}>
+        <button className={styles.btnEdit} type='submit' onClick={handleEdit}>
           Изменить
         </button>
-        <button className={styles.delete} type='submit' onClick={handleDelete}>
+        <button
+          className={styles.btnDelete}
+          type='submit'
+          onClick={handleDelete}
+        >
           Удалить
         </button>
       </div>
@@ -113,11 +145,27 @@ export const ContactInfo = () => {
 };
 
 export const HomePage = () => {
+  const modal = useAppSelector((state) => state.modal);
   return (
     <div className={styles.wrapper}>
       <ContactsList />
       <DragBar />
       <Outlet />
+      {modal.isModalOpened ? (
+        <ModalOverlay>
+          {modal.modalData?.modalType === 'edit' ? (
+            <ModalEdit />
+          ) : modal.modalData?.modalType === 'delete' ? (
+            <ModalDelete />
+          ) : modal.modalData?.modalType === 'new' ? (
+            <ModalNew />
+          ) : (
+            ''
+          )}
+        </ModalOverlay>
+      ) : (
+        ''
+      )}
     </div>
   );
 };
