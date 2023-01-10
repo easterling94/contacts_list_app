@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { SyntheticEvent, FormEvent } from 'react';
 import styles from './input.module.css';
 
 interface TInput {
   type: string;
   placeholder: string;
-  value: string | undefined;
   required?: boolean;
+  value: string | undefined;
+  onChange(e: React.ChangeEvent<HTMLInputElement>): void;
 }
 
 export const Input: React.FC<TInput> = ({
@@ -13,19 +14,20 @@ export const Input: React.FC<TInput> = ({
   type,
   required,
   value,
+  onChange,
 }) => {
-  const [loginValue, setLoginValue] = useState(value);
   return (
-    <input
-      className={styles.input}
-      type={type}
-      name='login'
-      value={loginValue}
-      onChange={(e: React.FormEvent<HTMLInputElement>): void =>
-        setLoginValue(e.currentTarget.value)
-      }
-      placeholder={placeholder}
-      required={required}
-    />
+    <div className={styles.inputBlock}>
+      <label className={styles.inputLabel}>{placeholder}</label>
+      <input
+        className={styles.input}
+        type={type}
+        name='login'
+        value={value}
+        onChange={(e) => onChange(e)}
+        placeholder={placeholder}
+        required={required}
+      />
+    </div>
   );
 };

@@ -3,13 +3,9 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { ContactListSlice } from '../../services/reducers/contact-list';
 import { Outlet, NavLink, useParams } from 'react-router-dom';
-import { IUserContacts } from '../../types/data';
+import { IUserContacts } from '../../services/reducers/users';
 import { ModalSlice } from '../../services/reducers/modal';
-import {
-  IModalDelete,
-  IModalEdit,
-  IModalNew,
-} from '../../services/reducers/modal';
+import { IModalData, TModalType } from '../../services/reducers/modal';
 import { ModalOverlay } from '../../components/modal/modal-overlay';
 import { ModalDelete } from '../../components/modal/modal-delete';
 import { ModalEdit } from '../../components/modal/modal-edit';
@@ -18,18 +14,21 @@ import { ModalNew } from '../../components/modal/modal-new';
 const ContactsList = () => {
   const width = useAppSelector((state) => state.drag.width);
   const contacts = useAppSelector((state) => state.user.user?.contacts);
-  const { openModal } = ModalSlice.actions;
+  const { openModal, fillModal } = ModalSlice.actions;
   const dispatch = useAppDispatch();
-  const handleNew = () => {
-    const contactNew: IModalNew = {
-      title: 'Новый контакт',
-      modalType: 'new',
+  const handleAddContact = () => {
+    const modalGeneral: { title: string; modalType: TModalType } = {
+      title: 'Добавьте новый контакт',
+      modalType: 'add',
+    };
+    const contactNew: IModalData = {
       data: {
         name: '',
         phone: '',
       },
     };
-    dispatch(openModal(contactNew));
+    dispatch(openModal(modalGeneral));
+    dispatch(fillModal(contactNew));
   };
 
   return (
@@ -54,7 +53,7 @@ const ContactsList = () => {
           )}
         </ul>
       </nav>
-      <button className={styles.btnNew} onClick={handleNew}>
+      <button className={styles.btnNew} onClick={handleAddContact}>
         Новый контакт
       </button>
     </section>
@@ -95,7 +94,7 @@ const DragBar = () => {
 };
 
 export const ContactInfo = () => {
-  const { openModal } = ModalSlice.actions;
+  const { openModal, fillModal } = ModalSlice.actions;
   const contacts = useAppSelector((state) => state.user.user?.contacts);
   const dispatch = useAppDispatch();
   const userId = useParams();
@@ -103,25 +102,29 @@ export const ContactInfo = () => {
     (el) => el.id === userId.contactId
   )[0];
 
-  const handleEdit = () => {
-    const contactToEdit: IModalEdit = {
-      title: 'Внесите изменения в карточку',
+  const handleEditContact = () => {
+    const modalGeneral: { title: string; modalType: TModalType } = {
+      title: 'Внесите изменения в контакт',
       modalType: 'edit',
+    };
+    const contactEdit: IModalData = {
       data: {
         name: contact?.name,
         phone: contact?.phone,
       },
     };
-    dispatch(openModal(contactToEdit));
+    dispatch(openModal(modalGeneral));
+    dispatch(fillModal(contactEdit));
   };
 
-  const handleDelete = () => {
-    const contactDelete: IModalDelete = {
-      title: 'Вы уверены, что хотите удалить данную запись?',
+  const handleDeleteContact = () => {
+    const modalGeneral: { title: string; modalType: TModalType } = {
+      title: 'Вы уверены, что хотите удалить данный контакт?',
       modalType: 'delete',
-      data: null,
     };
-    dispatch(openModal(contactDelete));
+    const contactDelete = null;
+    dispatch(openModal(modalGeneral));
+    dispatch(fillModal(contactDelete));
   };
 
   return (
@@ -129,13 +132,17 @@ export const ContactInfo = () => {
       <h1>{contact?.name}</h1>
       <h2>{contact?.phone}</h2>
       <div className={styles.buttons}>
-        <button className={styles.btnEdit} type='submit' onClick={handleEdit}>
+        <button
+          className={styles.btnEdit}
+          type='submit'
+          onClick={handleEditContact}
+        >
           Изменить
         </button>
         <button
           className={styles.btnDelete}
           type='submit'
-          onClick={handleDelete}
+          onClick={handleDeleteContact}
         >
           Удалить
         </button>
@@ -153,11 +160,11 @@ export const HomePage = () => {
       <Outlet />
       {modal.isModalOpened ? (
         <ModalOverlay>
-          {modal.modalData?.modalType === 'edit' ? (
+          {modal.modalType === 'edit' ? (
             <ModalEdit />
-          ) : modal.modalData?.modalType === 'delete' ? (
+          ) : modal.modalType === 'delete' ? (
             <ModalDelete />
-          ) : modal.modalData?.modalType === 'new' ? (
+          ) : modal.modalType === 'add' ? (
             <ModalNew />
           ) : (
             ''

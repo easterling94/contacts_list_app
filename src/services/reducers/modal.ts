@@ -1,25 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-type TModalType = null | 'new' | 'edit' | 'delete';
+export type TModalType = null | 'add' | 'edit' | 'delete';
 
-export interface IModalNew {
-  title: string,
-  modalType: TModalType,
-  data: {
-    name: string,
-    phone: string,
-  }
-}
-
-export interface IModalDelete {
-  title: string,
-  modalType: TModalType,
-  data: null,
-};
-
-export interface IModalEdit {
-  title: string,
-  modalType: TModalType,
+export interface IModalData {
   data: {
     name: string | undefined,
     phone: string | undefined,
@@ -29,11 +12,15 @@ export interface IModalEdit {
 
 interface IInitialState {
   isModalOpened: boolean,
-  modalData: null | IModalDelete | IModalEdit | IModalNew,
+  title: string | null,
+  modalType: TModalType,
+  modalData: null | IModalData,
 }
 
 const initialState: IInitialState = {
   isModalOpened: false,
+  title: null,
+  modalType: null,
   modalData: null,
 }
 
@@ -41,8 +28,12 @@ export const ModalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openModal(state, action: PayloadAction<IModalEdit | IModalDelete | IModalNew>) {
+    openModal(state, action: PayloadAction<{title: string, modalType: TModalType}>) {
       state.isModalOpened = true;
+      state.title = action.payload.title;
+      state.modalType = action.payload.modalType;
+    },
+    fillModal(state, action: PayloadAction<null | IModalData>) {
       state.modalData = action.payload;
     },
     closeModal(state) {

@@ -4,7 +4,7 @@ import { Input } from '../input/input';
 import { Button } from '../button/button';
 
 export const ModalDelete = () => {
-  const modalData = useAppSelector((state) => state.modal.modalData);
+  const modalData = useAppSelector((state) => state.modal);
   return (
     <>
       <div className={styles.header}>{modalData?.title}</div>

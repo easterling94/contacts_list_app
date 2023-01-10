@@ -1,13 +1,50 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IData } from "../../types/data";
-import { IUser } from "../../types/data";
 
+export interface IUserContacts {
+  id: string,
+  name: string;
+  phone: string;
+}
+
+interface IUser {
+  id: string;
+  name: string;
+  contacts: IUserContacts[];
+}
+
+interface IData {
+  user: IUser | null;
+
+  userDataRequested: boolean;
+
+  userFetchingSuccess: boolean;
+  userFetchingError: boolean;
+
+  contactAddingSuccess: boolean;
+  contactAddingError: boolean;
+
+  contactEditSuccess: boolean;
+  contactEditError: boolean;
+
+  contactDeleteSuccess: boolean;
+  contactDeleteError: boolean;
+}
 const initialState: IData = {
   user: null,
-  contactChosen: null,
+
   userDataRequested: false,
-  userDataSuccess: false,
-  userDataError: false,
+
+  userFetchingSuccess: false,
+  userFetchingError: false,
+
+  contactAddingSuccess: false,
+  contactAddingError: false,
+
+  contactEditSuccess: false,
+  contactEditError: false,
+
+  contactDeleteSuccess: false,
+  contactDeleteError: false,
 }
 
 export const UsersDataSlice = createSlice({
@@ -16,17 +53,39 @@ export const UsersDataSlice = createSlice({
   reducers: {
     dataRequesting(state) {
       state.userDataRequested = true;
+
+      state.userFetchingSuccess = false;
+      state.userFetchingError = false;
+
+      state.contactAddingSuccess = false;
+      state.contactAddingError = false;
+
+      state.contactEditSuccess = false;
+      state.contactEditError = false;
+
+      state.contactDeleteSuccess = false;
+      state.contactDeleteError = false;
     },
-    dataRequestingSuccess(state, action: PayloadAction<IUser>) {
+
+    userFetchingSuccess(state, action: PayloadAction<IUser>) {
       state.userDataRequested = false;
-      state.userDataSuccess = true;
-      state.userDataError = false;
+      state.userFetchingSuccess = true;
+      state.userFetchingError = false;
       state.user = action.payload;
     },
-    dataRequestingError(state, action: PayloadAction) {
+    userFetchingError(state) {
       state.userDataRequested = false;
-      state.userDataSuccess = false;
-      state.userDataError = true;
+      state.userFetchingSuccess = false;
+      state.userFetchingError = true;
+    },
+
+    userAddingSuccess(state, action: PayloadAction<IUserContacts>) {
+      state.userDataRequested = false;
+      state.contactAddingSuccess = true;
+      state.contactAddingError = false;
+      if (state.user) {
+        state.user.contacts = [...state.user.contacts, action.payload];
+      }
     }
   }
 })

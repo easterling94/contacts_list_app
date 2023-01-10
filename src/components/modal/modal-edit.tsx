@@ -4,11 +4,11 @@ import { Input } from '../input/input';
 import { Button } from '../button/button';
 
 export const ModalEdit = () => {
-  const modalData = useAppSelector((state) => state.modal.modalData);
+  const modalData = useAppSelector((state) => state.modal);
   return (
     <>
       <div className={styles.header}>{modalData?.title}</div>
-      <Input
+      {/* <Input
         type='text'
         placeholder='Имя'
         required={true}
@@ -19,9 +19,9 @@ export const ModalEdit = () => {
         placeholder='Телефон'
         required={true}
         value={modalData?.data?.phone}
-      />
+      /> */}
       <div className={styles.btns}>
-        <Button text='Сбросить' type='cancel' />
+        <Button text='Сбросить' type='reset' />
         <Button text='Сохранить' type='submit' />
       </div>
     </>

@@ -1,6 +1,13 @@
+.inputBlock {
+  display: flex;
+  flex-direction: column;
+}
+.inputLabel {
+  display: block;
+}
 .input {
   padding: 10px;
   border: 1px solid grey;
   border-radius: 5px;
-  margin-bottom: 20px;;
+  margin-bottom: 20px;
 }

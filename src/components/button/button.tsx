@@ -5,7 +5,7 @@ import { SyntheticEvent } from 'react';
 interface IButton {
   buttonFunction?: (e: SyntheticEvent) => void;
   text: string;
-  type: 'cancel' | 'submit';
+  type: 'reset' | 'submit';
 }
 
 export const Button: FC<IButton> = ({ buttonFunction, text, type }) => {
@@ -15,7 +15,7 @@ export const Button: FC<IButton> = ({ buttonFunction, text, type }) => {
         styles.btn +
         ' ' +
         `${
-          type === 'cancel'
+          type === 'reset'
             ? styles.cancel
             : type === 'submit'
             ? styles.submit
@@ -23,6 +23,7 @@ export const Button: FC<IButton> = ({ buttonFunction, text, type }) => {
         }`
       }
       onClick={buttonFunction}
+      type={type}
     >
       {text}
     </button>
