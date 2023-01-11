@@ -4,15 +4,17 @@ import styles from './modal.module.css';
 import { Input } from '../input/input';
 import { Button } from '../button/button';
 import { SyntheticEvent } from 'react';
+import { addUser } from '../../services/reducers/ActionCreators';
 
 export const ModalNew = () => {
   const modalData = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
-  const { fillModal } = ModalSlice.actions;
+  const { fillModal, closeModal } = ModalSlice.actions;
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log(e);
+    dispatch(addUser(modalData.modalData?.data));
+    dispatch(closeModal());
   };
 
   const onReset = () => {

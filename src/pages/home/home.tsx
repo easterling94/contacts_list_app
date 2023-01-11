@@ -1,5 +1,5 @@
 import styles from './home.module.scss';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { ContactListSlice } from '../../services/reducers/contact-list';
 import { Outlet, NavLink, useParams } from 'react-router-dom';
@@ -10,10 +10,11 @@ import { ModalOverlay } from '../../components/modal/modal-overlay';
 import { ModalDelete } from '../../components/modal/modal-delete';
 import { ModalEdit } from '../../components/modal/modal-edit';
 import { ModalNew } from '../../components/modal/modal-new';
+import { Loader } from '../../components/modal/loader';
 
 const ContactsList = () => {
   const width = useAppSelector((state) => state.drag.width);
-  const contacts = useAppSelector((state) => state.user.user?.contacts);
+  const contacts = useAppSelector((state) => state.user.userContacts);
   const { openModal, fillModal } = ModalSlice.actions;
   const dispatch = useAppDispatch();
   const handleAddContact = () => {
@@ -95,7 +96,7 @@ const DragBar = () => {
 
 export const ContactInfo = () => {
   const { openModal, fillModal } = ModalSlice.actions;
-  const contacts = useAppSelector((state) => state.user.user?.contacts);
+  const contacts = useAppSelector((state) => state.user.userContacts);
   const dispatch = useAppDispatch();
   const userId = useParams();
   const contact: IUserContacts | undefined = contacts?.filter(
@@ -153,6 +154,10 @@ export const ContactInfo = () => {
 
 export const HomePage = () => {
   const modal = useAppSelector((state) => state.modal);
+  const userDataRequesting = useAppSelector(
+    (state) => state.user.userDataRequested
+  );
+
   return (
     <div className={styles.wrapper}>
       <ContactsList />
@@ -169,6 +174,13 @@ export const HomePage = () => {
           ) : (
             ''
           )}
+        </ModalOverlay>
+      ) : (
+        ''
+      )}
+      {userDataRequesting ? (
+        <ModalOverlay>
+          <Loader />
         </ModalOverlay>
       ) : (
         ''

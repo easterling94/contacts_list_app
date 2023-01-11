@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { stat } from 'fs';
 
 export interface IUserContacts {
   id: string,
@@ -6,14 +7,8 @@ export interface IUserContacts {
   phone: string;
 }
 
-interface IUser {
-  id: string;
-  name: string;
-  contacts: IUserContacts[];
-}
-
 interface IData {
-  user: IUser | null;
+  userContacts: IUserContacts[] | null;
 
   userDataRequested: boolean;
 
@@ -30,7 +25,7 @@ interface IData {
   contactDeleteError: boolean;
 }
 const initialState: IData = {
-  user: null,
+  userContacts: null,
 
   userDataRequested: false,
 
@@ -67,15 +62,14 @@ export const UsersDataSlice = createSlice({
       state.contactDeleteError = false;
     },
 
-    userFetchingSuccess(state, action: PayloadAction<IUser>) {
+    userFetchingSuccess(state, action: PayloadAction<IUserContacts[]>) {
       state.userDataRequested = false;
       state.userFetchingSuccess = true;
       state.userFetchingError = false;
-      state.user = action.payload;
+      state.userContacts = action.payload;
     },
     userFetchingError(state) {
       state.userDataRequested = false;
-      state.userFetchingSuccess = false;
       state.userFetchingError = true;
     },
 
@@ -83,9 +77,42 @@ export const UsersDataSlice = createSlice({
       state.userDataRequested = false;
       state.contactAddingSuccess = true;
       state.contactAddingError = false;
-      if (state.user) {
-        state.user.contacts = [...state.user.contacts, action.payload];
+      if (state.userContacts) {
+        state.userContacts = [...state.userContacts, action.payload];
       }
-    }
+    },
+    userAddingError(state) {
+      state.userDataRequested = false;
+      state.contactAddingError = true;
+    },
+    userEdditingSuccess(state, action: PayloadAction<IUserContacts>) {
+      state.userDataRequested = false;
+      state.contactEditSuccess = true;
+      state.contactEditError = false;
+      if (state.userContacts) {
+        state.userContacts = state.userContacts?.map((el) => {
+          if (el.id !== action.payload.id) return el;
+          return action.payload;
+        })
+      } 
+    },
+    userEdditingError(state) {
+      state.userDataRequested = false;
+      state.contactEditError = true;
+    },
+    userDeletingSuccess(state, action: PayloadAction<any>) {
+      state.userDataRequested = false;
+      state.contactDeleteSuccess = true;
+      state.contactDeleteError = false;
+      if(state.userContacts) {
+        state.userContacts = state.userContacts.filter((el) => {
+          return el.id !== action.payload
+        })
+      }
+    },
+    userDeletingError(state) {
+      state.userDataRequested = false;
+      state.contactDeleteError = true;
+    },
   }
 })

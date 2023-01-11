@@ -1,5 +1,5 @@
 const BASE_URL = 'http://localhost:5001';
-const URL_USERS = BASE_URL + '/users';
+const URL_CONTACTS = BASE_URL + '/users';
 
 const checkResponse = (res: any) => {
   if (res.ok) {
@@ -8,26 +8,18 @@ const checkResponse = (res: any) => {
   }
 };
 
-export const getUserAPI = async (cookie: string) => {
-  /*
-    Куки используются для авторизации и отправке персонафицированных данных на клиент
-  */
-  const data = await fetch(URL_USERS, {
+export const getUserAPI = async () => {
+  const data = await fetch(URL_CONTACTS, {
     method: "GET",
     headers: {
       'Content-type': 'application/json',
-      authorization: cookie,
     }
   }).then(checkResponse);
   return data;
 };
 
-/*
-___________________________________________
-*/
-
-export const deleteContactAPI = async (user: any) => {
-  const data = await fetch(`${URL_USERS} / ${user}`, {
+export const deleteContactAPI = async (contactID: any) => {
+  const data = await fetch(`${URL_CONTACTS}/${contactID}`, {
     method: "DELETE",
     headers: {
       'Content-type': 'application/json',
@@ -36,10 +28,10 @@ export const deleteContactAPI = async (user: any) => {
   return data;
 }
 
-export const editContactAPI = async (user: string) => {
-  const data = await fetch(`${URL_USERS} / ${user}`, {
+export const editContactAPI = async (contactID: any, contact: any) => {
+  const data = await fetch(`${URL_CONTACTS}/${contactID}`, {
     method: "PUT", 
-    body: JSON.stringify(user),
+    body: JSON.stringify(contact),
     headers: {
       'Content-type': 'application/json'
     }
@@ -48,7 +40,7 @@ export const editContactAPI = async (user: string) => {
 }
 
 export const addContactAPI = async (contact: any) => {
-  const data = await fetch(URL_USERS, {
+  const data = await fetch(URL_CONTACTS, {
     method: "POST",
     headers: {
       'Content-type': 'application/json'
