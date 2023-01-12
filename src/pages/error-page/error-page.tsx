@@ -6,6 +6,7 @@ import { Button } from '../../components/button/button';
 export const ErrorPage: React.FC = () => {
   const error = useRouteError();
   if (isRouteErrorResponse(error)) {
+    console.log(error);
     return (
       <div className={styles.wrapper}>
         <h1 className={styles.header}>{error.status}</h1>

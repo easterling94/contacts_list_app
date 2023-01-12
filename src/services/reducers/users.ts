@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { stat } from 'fs';
 
-export interface IUserContacts {
+export interface IUserContact {
   id: string,
+  shortcut: string,
   name: string;
   phone: string;
 }
 
 interface IData {
-  userContacts: IUserContacts[] | null;
+  userContacts: IUserContact[] | null;
 
   userDataRequested: boolean;
 
@@ -62,7 +62,7 @@ export const UsersDataSlice = createSlice({
       state.contactDeleteError = false;
     },
 
-    userFetchingSuccess(state, action: PayloadAction<IUserContacts[]>) {
+    userFetchingSuccess(state, action: PayloadAction<IUserContact[]>) {
       state.userDataRequested = false;
       state.userFetchingSuccess = true;
       state.userFetchingError = false;
@@ -73,7 +73,7 @@ export const UsersDataSlice = createSlice({
       state.userFetchingError = true;
     },
 
-    userAddingSuccess(state, action: PayloadAction<IUserContacts>) {
+    userAddingSuccess(state, action: PayloadAction<IUserContact>) {
       state.userDataRequested = false;
       state.contactAddingSuccess = true;
       state.contactAddingError = false;
@@ -85,7 +85,7 @@ export const UsersDataSlice = createSlice({
       state.userDataRequested = false;
       state.contactAddingError = true;
     },
-    userEdditingSuccess(state, action: PayloadAction<IUserContacts>) {
+    userEdditingSuccess(state, action: PayloadAction<IUserContact>) {
       state.userDataRequested = false;
       state.contactEditSuccess = true;
       state.contactEditError = false;

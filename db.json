@@ -1,24 +1,28 @@
 {
-  "users": [
+  "contacts": [
     {
-      "name": "Tina Sanchez Sopranos",
+      "name": "Meadow Soprano",
       "phone": "123-12-12",
+      "shortcut": "meadowsoprano",
       "id": "1"
     },
     {
-      "id": "2",
-      "name": "XAEA12",
-      "phone": "234-45-45"
+      "name": "Uncle Paulie",
+      "phone": "234-45-45",
+      "shortcut": "unclepaulie",
+      "id": "2"
     },
     {
-      "name": "Iron Man 4ever!",
+      "name": "Christopher Moltisanti",
       "phone": "666-69-69",
+      "shortcut": "christophermoltisanti",
       "id": "3"
     },
     {
-      "id": "4",
-      "name": "Boss",
-      "phone": "999-99-99"
+      "name": "Tony Soprano",
+      "phone": "999-99-99",
+      "shortcut": "tonysoprano",
+      "id": "4"
     }
   ],
   "else": {

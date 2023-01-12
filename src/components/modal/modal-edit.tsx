@@ -6,17 +6,38 @@ import { SyntheticEvent } from 'react';
 import { editUser } from '../../services/reducers/ActionCreators';
 import { Button } from '../button/button';
 import { useParams } from 'react-router-dom';
+import { IUserContact } from '../../services/reducers/users';
+import { useNavigate } from 'react-router-dom';
+import { contactShortcut } from '../../hooks/functions';
 
 export const ModalEdit = () => {
   const modalData = useAppSelector((state) => state.modal);
+  const userContacts = useAppSelector((state) => state.user.userContacts);
   const dispatch = useAppDispatch();
   const { fillModal, closeModal } = ModalSlice.actions;
   const params = useParams();
+  const navigate = useNavigate();
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(editUser(params.contactId, modalData.modalData?.data));
-    dispatch(closeModal());
+    if (userContacts) {
+      const contactID: IUserContact = userContacts?.filter((el) => {
+        return el.shortcut === params.contactShortcut;
+      })[0];
+      const modalDataGeneral = modalData.modalData?.data;
+      if (modalDataGeneral && modalDataGeneral.name) {
+        const enrichedContact = {
+          ...modalDataGeneral,
+          shortcut: contactShortcut(modalDataGeneral.name),
+        };
+
+        dispatch(editUser(contactID.id, enrichedContact));
+        if (modalData.modalData?.data.name) {
+          navigate(`/home/${contactShortcut(modalData.modalData?.data.name)}`);
+        }
+        dispatch(closeModal());
+      }
+    }
   };
 
   const onReset = () => {

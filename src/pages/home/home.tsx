@@ -1,9 +1,8 @@
 import styles from './home.module.scss';
-import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { ContactListSlice } from '../../services/reducers/contact-list';
 import { Outlet, NavLink, useParams } from 'react-router-dom';
-import { IUserContacts } from '../../services/reducers/users';
+import { IUserContact } from '../../services/reducers/users';
 import { ModalSlice } from '../../services/reducers/modal';
 import { IModalData, TModalType } from '../../services/reducers/modal';
 import { ModalOverlay } from '../../components/modal/modal-overlay';
@@ -11,12 +10,14 @@ import { ModalDelete } from '../../components/modal/modal-delete';
 import { ModalEdit } from '../../components/modal/modal-edit';
 import { ModalNew } from '../../components/modal/modal-new';
 import { Loader } from '../../components/modal/loader';
+import { contactShortcut } from '../../hooks/functions';
 
 const ContactsList = () => {
   const width = useAppSelector((state) => state.drag.width);
   const contacts = useAppSelector((state) => state.user.userContacts);
   const { openModal, fillModal } = ModalSlice.actions;
   const dispatch = useAppDispatch();
+
   const handleAddContact = () => {
     const modalGeneral: { title: string; modalType: TModalType } = {
       title: 'Добавьте новый контакт',
@@ -40,7 +41,7 @@ const ContactsList = () => {
             contacts.map((el) => (
               <li key={el.phone}>
                 <NavLink
-                  to={`/home/${el.id}`}
+                  to={`/home/${contactShortcut(el.name)}`}
                   className={({ isActive }) =>
                     isActive ? `${styles.active}` : undefined
                   }
@@ -98,9 +99,9 @@ export const ContactInfo = () => {
   const { openModal, fillModal } = ModalSlice.actions;
   const contacts = useAppSelector((state) => state.user.userContacts);
   const dispatch = useAppDispatch();
-  const userId = useParams();
-  const contact: IUserContacts | undefined = contacts?.filter(
-    (el) => el.id === userId.contactId
+  const userShortcut = useParams();
+  const contact: IUserContact | undefined = contacts?.filter(
+    (el) => contactShortcut(el.name) === userShortcut.contactShortcut
   )[0];
 
   const handleEditContact = () => {
@@ -129,26 +130,32 @@ export const ContactInfo = () => {
   };
 
   return (
-    <section className={styles.sectionRight}>
-      <h1>{contact?.name}</h1>
-      <h2>{contact?.phone}</h2>
-      <div className={styles.buttons}>
-        <button
-          className={styles.btnEdit}
-          type='submit'
-          onClick={handleEditContact}
-        >
-          Изменить
-        </button>
-        <button
-          className={styles.btnDelete}
-          type='submit'
-          onClick={handleDeleteContact}
-        >
-          Удалить
-        </button>
-      </div>
-    </section>
+    <>
+      {contact ? (
+        <section className={styles.sectionRight}>
+          <h1>{contact?.name}</h1>
+          <h2>{contact?.phone}</h2>
+          <div className={styles.buttons}>
+            <button
+              className={styles.btnEdit}
+              type='submit'
+              onClick={handleEditContact}
+            >
+              Изменить
+            </button>
+            <button
+              className={styles.btnDelete}
+              type='submit'
+              onClick={handleDeleteContact}
+            >
+              Удалить
+            </button>
+          </div>
+        </section>
+      ) : (
+        'Данного контакта не существует'
+      )}
+    </>
   );
 };
 

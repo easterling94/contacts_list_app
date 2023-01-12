@@ -5,16 +5,32 @@ import { Input } from '../input/input';
 import { Button } from '../button/button';
 import { SyntheticEvent } from 'react';
 import { addUser } from '../../services/reducers/ActionCreators';
+import { useNavigate } from 'react-router-dom';
+import { contactShortcut } from '../../hooks/functions';
 
 export const ModalNew = () => {
   const modalData = useAppSelector((state) => state.modal);
+
   const dispatch = useAppDispatch();
   const { fillModal, closeModal } = ModalSlice.actions;
+  const navigate = useNavigate();
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(addUser(modalData.modalData?.data));
-    dispatch(closeModal());
+    const modalDataGeneral = modalData.modalData?.data;
+    if (modalDataGeneral && modalDataGeneral.name) {
+      const enrichedContact = {
+        ...modalDataGeneral,
+        shortcut: contactShortcut(modalDataGeneral.name),
+      };
+
+      dispatch(addUser(enrichedContact));
+      dispatch(closeModal());
+
+      if (modalData.modalData?.data.name) {
+        navigate(`/home/${contactShortcut(modalData.modalData?.data.name)}`);
+      }
+    }
   };
 
   const onReset = () => {

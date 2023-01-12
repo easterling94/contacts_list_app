@@ -1,5 +1,5 @@
 const BASE_URL = 'http://localhost:5001';
-const URL_CONTACTS = BASE_URL + '/users';
+const URL_CONTACTS = BASE_URL + '/contacts';
 
 const checkResponse = (res: any) => {
   if (res.ok) {
