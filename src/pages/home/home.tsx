@@ -11,6 +11,7 @@ import { ModalEdit } from '../../components/modal/modal-edit';
 import { ModalNew } from '../../components/modal/modal-new';
 import { Loader } from '../../components/modal/loader';
 import { contactShortcut } from '../../hooks/functions';
+import { ErrorContact } from './error-contact';
 
 const ContactsList = () => {
   const width = useAppSelector((state) => state.drag.width);
@@ -124,9 +125,8 @@ export const ContactInfo = () => {
       title: 'Вы уверены, что хотите удалить данный контакт?',
       modalType: 'delete',
     };
-    const contactDelete = null;
     dispatch(openModal(modalGeneral));
-    dispatch(fillModal(contactDelete));
+    dispatch(fillModal(null));
   };
 
   return (
@@ -153,7 +153,7 @@ export const ContactInfo = () => {
           </div>
         </section>
       ) : (
-        'Данного контакта не существует'
+        <ErrorContact />
       )}
     </>
   );

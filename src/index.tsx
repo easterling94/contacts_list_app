@@ -4,8 +4,9 @@ import App from './components/app/App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ErrorPage } from './pages/error-page/error-page';
 import { HomePage } from './pages/home/home';
+import { NoContactChosen } from './pages/home/no-contact-chosen';
 import { LoginPage } from './pages/login-page/login';
-import { WelcomePage } from './pages/welcome-page';
+import { WelcomePage } from './pages/welcome-page/welcome-page';
 import { ContactInfo } from './pages/home/home';
 import { store } from './services/store';
 import { Provider } from 'react-redux';
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
           {
             path: ':contactShortcut',
             element: <ContactInfo />,
+          },
+          {
+            path: '',
+            element: <NoContactChosen />,
           },
         ],
       },

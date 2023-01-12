@@ -1,8 +1,11 @@
 $submitNoHover: rgb(40, 168, 40);
 $submitWithHover: rgb(33, 143, 33);
 
-$cancelNoHover: rgb(40, 117, 168);
-$cancelWithHover: rgb(33, 92, 161);
+$resetNoHover: rgb(40, 117, 168);
+$resetWithHover: rgb(33, 92, 161);
+
+$buttonNoHover: rgb(132, 40, 168);
+$buttonWithHover: rgb(125, 15, 161);
 
 @mixin transition($x...) {
   transition: $x;
@@ -29,10 +32,14 @@ $cancelWithHover: rgb(33, 92, 161);
   @include transition(box-shadow 1s ease-out, background-color 1s ease-out) ;
 }
 
-.cancel {
-  @include hover($cancelNoHover, $cancelWithHover)
+.reset {
+  @include hover($resetNoHover, $resetWithHover)
 }
 
 .submit {
   @include hover($submitNoHover, $submitWithHover)
+}
+
+.button {
+  @include hover($buttonNoHover, $buttonWithHover)
 }
