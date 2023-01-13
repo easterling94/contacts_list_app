@@ -161,9 +161,7 @@ export const ContactInfo = () => {
 
 export const HomePage = () => {
   const modal = useAppSelector((state) => state.modal);
-  const userDataRequesting = useAppSelector(
-    (state) => state.user.userDataRequested
-  );
+  const isLoaderShown = useAppSelector((state) => state.loader.isLoaderShown);
 
   return (
     <div className={styles.wrapper}>
@@ -171,7 +169,7 @@ export const HomePage = () => {
       <DragBar />
       <Outlet />
       {modal.isModalOpened ? (
-        <ModalOverlay>
+        <ModalOverlay closeBtn={true}>
           {modal.modalType === 'edit' ? (
             <ModalEdit />
           ) : modal.modalType === 'delete' ? (
@@ -185,8 +183,8 @@ export const HomePage = () => {
       ) : (
         ''
       )}
-      {userDataRequesting ? (
-        <ModalOverlay>
+      {isLoaderShown ? (
+        <ModalOverlay closeBtn={false}>
           <Loader />
         </ModalOverlay>
       ) : (

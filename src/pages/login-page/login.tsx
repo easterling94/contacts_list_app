@@ -1,3 +1,5 @@
+import styles from './login.module.scss';
+
 export const LoginPage = () => {
-  return <div>Надо бы залогиниться</div>;
+  return <div>Страница логина</div>;
 };

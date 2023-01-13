@@ -7,9 +7,10 @@ import React from 'react';
 
 interface IOverlay {
   children?: React.ReactNode | undefined;
+  closeBtn: boolean;
 }
 
-export const ModalOverlay: FC<IOverlay> = ({ children }) => {
+export const ModalOverlay: FC<IOverlay> = ({ children, closeBtn }) => {
   const dispatch = useAppDispatch();
   const { closeModal } = ModalSlice.actions;
   const handleClose = () => {
@@ -18,9 +19,13 @@ export const ModalOverlay: FC<IOverlay> = ({ children }) => {
   return (
     <div className={styles.background}>
       <div className={styles.wrapper}>
-        <div className={styles.closeIcon} onClick={handleClose}>
-          <GrClose />
-        </div>
+        {closeBtn ? (
+          <div className={styles.closeIcon} onClick={handleClose}>
+            <GrClose />
+          </div>
+        ) : (
+          ''
+        )}
         {children}
       </div>
     </div>
