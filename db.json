@@ -23,6 +23,12 @@
       "phone": "999-99-99",
       "shortcut": "tonysoprano",
       "id": "4"
+    },
+    {
+      "name": "Nik",
+      "phone": "123",
+      "shortcut": "nik",
+      "id": "rY28TBD"
     }
   ],
   "else": {
