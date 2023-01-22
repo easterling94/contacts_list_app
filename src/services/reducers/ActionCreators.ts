@@ -2,18 +2,19 @@ import { AppDispatch } from "../store";
 import { UsersDataSlice } from "./users";
 import { LoaderSlice } from './loader';
 import { 
-  getUserAPI,
+  getUserAPIFirebase,
+  addContactAPIFirebase,
   addContactAPI,
   editContactAPI,
-  deleteContactAPI
+  deleteContactAPI,
 } from "../../utils/api";
 
 export const fetchUsers = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(UsersDataSlice.actions.dataRequesting());
     dispatch(LoaderSlice.actions.showLoader());
-    const res = await getUserAPI();
-    dispatch(UsersDataSlice.actions.userFetchingSuccess(res))
+    const resFirebase = await getUserAPIFirebase();
+    dispatch(UsersDataSlice.actions.userFetchingSuccess(resFirebase.contacts))
   }
   catch {
     dispatch(UsersDataSlice.actions.userFetchingError())
@@ -25,6 +26,7 @@ export const addUser = (contact: any) => async (dispatch: AppDispatch) => {
     dispatch(UsersDataSlice.actions.dataRequesting());
     dispatch(LoaderSlice.actions.showLoader());
     const res = await addContactAPI(contact);
+    // const res = await addContactAPIFirebase(contact);
     dispatch(UsersDataSlice.actions.userAddingSuccess(res))
   }
   catch {
