@@ -30,7 +30,7 @@ export const ModalDelete = () => {
     }
   };
   return (
-    <form className={styles.form} onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <div className={styles.header}>{modalData?.title}</div>
       <div className={styles.btns}>
         <Button text='Удалить' type='submit' />

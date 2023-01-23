@@ -7,7 +7,7 @@ import { SyntheticEvent } from 'react';
 import { addContact } from '../../services/reducers/ActionCreators';
 import { useNavigate } from 'react-router-dom';
 import { contactShortcut } from '../../hooks/functions';
-import { v4 as uuidV4, v4 } from 'uuid';
+import { v4 } from 'uuid';
 
 export const ModalNew = () => {
   const modalData = useAppSelector((state) => state.modal);
@@ -67,7 +67,7 @@ export const ModalNew = () => {
     dispatch(fillModal(fieldChange));
   };
   return (
-    <form className={styles.form} onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <div className={styles.header}>{modalData?.title}</div>
       <Input
         type='text'

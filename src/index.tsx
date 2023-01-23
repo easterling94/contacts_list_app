@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ErrorPage } from './pages/error-page/error-page';
-import { HomePage } from './pages/home/home';
-import { NoContactChosen } from './pages/home/no-contact-chosen';
+import { HomePage } from './pages/contacts/contacts';
+import { NoContactChosen } from './pages/contacts/no-contact-chosen';
 import { LoginPage } from './pages/login-page/login';
 import { WelcomePage } from './pages/welcome-page/welcome-page';
-import { ContactInfo } from './pages/home/home';
+import { ContactInfo } from './pages/contacts/contacts';
 import { store } from './services/store';
 import { Provider } from 'react-redux';
+import { ProfilePage } from './pages/profile-page/profile-page';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <LoginPage />,
+      },
+      {
+        path: '/profile',
+        element: <ProfilePage />,
       },
     ],
   },

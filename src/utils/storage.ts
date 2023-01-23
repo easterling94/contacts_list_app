@@ -1,9 +1,13 @@
-export const setLocalStorage = (userId: string): void => {
+export const setLocalStorageUser = (userId: string): void => {
   localStorage.setItem('userId', userId)
 }
 
-export const getLocalStorage = () => {
+export const getLocalStorageUser = () => {
   return localStorage.getItem("userId")
+}
+
+export const removeLocalStorageUser = () => {
+  localStorage.removeItem('userId')
 }
 
 export const setCookie = (): void => {

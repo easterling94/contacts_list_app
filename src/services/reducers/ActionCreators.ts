@@ -3,19 +3,16 @@ import { UserDataSlice } from "./user";
 import { LoaderSlice } from './loader';
 import { 
   getUserAPIFirebase,
-  addContactAPIFirebase,
-  addContactAPI,
-  editContactAPI,
-  deleteContactAPI,
+  firestoreAPI,
 } from "../../utils/api";
-import { setLocalStorage } from '../../utils/storage';
+import { setLocalStorageUser } from '../../utils/storage';
 
 export const fetchUser = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(UserDataSlice.actions.dataRequesting());
     dispatch(LoaderSlice.actions.showLoader());
     const resFirebase = await getUserAPIFirebase();
-    setLocalStorage(resFirebase.id)
+    setLocalStorageUser(resFirebase.id)
     dispatch(UserDataSlice.actions.userFetchingSuccess(resFirebase))
   }
   catch {
@@ -27,7 +24,7 @@ export const addContact = (contact: any) => async (dispatch: AppDispatch) => {
   try {
     dispatch(UserDataSlice.actions.dataRequesting());
     dispatch(LoaderSlice.actions.showLoader());
-    await addContactAPIFirebase(contact);
+    await firestoreAPI(contact);
     dispatch(UserDataSlice.actions.userAddingSuccess(contact))
   }
   catch {
@@ -39,7 +36,7 @@ export const editContact = (contact: any) => async (dispatch: AppDispatch) => {
   try {
     dispatch(UserDataSlice.actions.dataRequesting());
     dispatch(LoaderSlice.actions.showLoader());
-    await editContactAPI(contact);
+    await firestoreAPI(contact);
     dispatch(UserDataSlice.actions.userEdditingSuccess(contact))
   }
   catch {
@@ -51,7 +48,7 @@ export const deleteContact = (contact: any) => async(dispatch: AppDispatch) => {
   try {
     dispatch(UserDataSlice.actions.dataRequesting());
     dispatch(LoaderSlice.actions.showLoader());
-    await deleteContactAPI(contact);
+    await firestoreAPI(contact);
     dispatch(UserDataSlice.actions.userDeletingSuccess(contact))
   }
   catch {

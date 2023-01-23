@@ -78,7 +78,7 @@ export const ModalEdit = () => {
   };
 
   return (
-    <form className={styles.form} onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <div className={styles.header}>{modalData?.title}</div>
       <Input
         type='text'
