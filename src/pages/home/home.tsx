@@ -2,7 +2,7 @@ import styles from './home.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { ContactListSlice } from '../../services/reducers/contact-list';
 import { Outlet, NavLink, useParams } from 'react-router-dom';
-import { IUserContact } from '../../services/reducers/users';
+import { IUserContact } from '../../services/reducers/user';
 import { ModalSlice } from '../../services/reducers/modal';
 import { IModalData, TModalType } from '../../services/reducers/modal';
 import { ModalOverlay } from '../../components/modal/modal-overlay';
@@ -15,7 +15,7 @@ import { ErrorContact } from './error-contact';
 
 const ContactsList = () => {
   const width = useAppSelector((state) => state.drag.width);
-  const contacts = useAppSelector((state) => state.user.userContacts);
+  const contacts = useAppSelector((state) => state.user.user?.contacts);
   const { openModal, fillModal } = ModalSlice.actions;
   const dispatch = useAppDispatch();
 
@@ -98,7 +98,7 @@ const DragBar = () => {
 
 export const ContactInfo = () => {
   const { openModal, fillModal } = ModalSlice.actions;
-  const contacts = useAppSelector((state) => state.user.userContacts);
+  const contacts = useAppSelector((state) => state.user.user?.contacts);
   const dispatch = useAppDispatch();
   const userShortcut = useParams();
   const contact: IUserContact | undefined = contacts?.filter(

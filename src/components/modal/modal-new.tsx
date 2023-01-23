@@ -4,13 +4,14 @@ import styles from './modal.module.css';
 import { Input } from '../input/input';
 import { Button } from '../button/button';
 import { SyntheticEvent } from 'react';
-import { addUser } from '../../services/reducers/ActionCreators';
+import { addContact } from '../../services/reducers/ActionCreators';
 import { useNavigate } from 'react-router-dom';
 import { contactShortcut } from '../../hooks/functions';
+import { v4 as uuidV4, v4 } from 'uuid';
 
 export const ModalNew = () => {
   const modalData = useAppSelector((state) => state.modal);
-
+  const userContacts = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
   const { fillModal, closeModal } = ModalSlice.actions;
   const navigate = useNavigate();
@@ -18,13 +19,16 @@ export const ModalNew = () => {
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     const modalDataGeneral = modalData.modalData?.data;
-    if (modalDataGeneral && modalDataGeneral.name) {
+    if (modalDataGeneral && modalDataGeneral.name && userContacts?.contacts) {
       const enrichedContact = {
         ...modalDataGeneral,
         shortcut: contactShortcut(modalDataGeneral.name),
+        id: v4(),
       };
 
-      dispatch(addUser(enrichedContact));
+      const newContactList = [...userContacts.contacts, enrichedContact];
+
+      dispatch(addContact(newContactList));
       dispatch(closeModal());
 
       if (modalData.modalData?.data.name) {

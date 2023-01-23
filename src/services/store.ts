@@ -1,12 +1,12 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { ContactListSlice } from "./reducers/contact-list";
-import { UsersDataSlice } from "./reducers/users";
+import { UserDataSlice } from "./reducers/user";
 import { ModalSlice } from './reducers/modal';
 import { LoaderSlice } from './reducers/loader';
 
 const rootReducer = combineReducers({
   drag: ContactListSlice.reducer,
-  user: UsersDataSlice.reducer,
+  user: UserDataSlice.reducer,
   modal: ModalSlice.reducer,
   loader: LoaderSlice.reducer,
 });

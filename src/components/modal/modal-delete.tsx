@@ -1,16 +1,16 @@
 import { useAppSelector, useAppDispatch } from '../../hooks/redux';
 import styles from './modal.module.css';
 import { Button } from '../button/button';
-import { deleteUser } from '../../services/reducers/ActionCreators';
+import { deleteContact } from '../../services/reducers/ActionCreators';
 import { SyntheticEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import { ModalSlice } from '../../services/reducers/modal';
 import { useNavigate } from 'react-router-dom';
-import { IUserContact } from '../../services/reducers/users';
+import { IUserContact } from '../../services/reducers/user';
 
 export const ModalDelete = () => {
   const modalData = useAppSelector((state) => state.modal);
-  const userContacts = useAppSelector((state) => state.user.userContacts);
+  const userContacts = useAppSelector((state) => state.user.user?.contacts);
   const dispatch = useAppDispatch();
   const params = useParams();
   const { closeModal } = ModalSlice.actions;
@@ -18,11 +18,13 @@ export const ModalDelete = () => {
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+
     if (userContacts) {
-      const contactID: IUserContact = userContacts?.filter((el) => {
-        return el.shortcut === params.contactShortcut;
-      })[0];
-      dispatch(deleteUser(contactID.id));
+      const newContactList: IUserContact[] = userContacts?.filter((el) => {
+        return el.shortcut !== params.contactShortcut;
+      });
+
+      dispatch(deleteContact(newContactList));
       dispatch(closeModal());
       navigate('/home');
     }

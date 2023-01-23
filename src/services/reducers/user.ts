@@ -7,8 +7,14 @@ export interface IUserContact {
   phone: string;
 }
 
+export interface IUser {
+  id: string,
+  name: string,
+  contacts: IUserContact[] | null,
+}
+
 interface IData {
-  userContacts: IUserContact[] | null;
+  user: IUser | null,
 
   userDataRequested: boolean;
 
@@ -25,7 +31,7 @@ interface IData {
   contactDeleteError: boolean;
 }
 const initialState: IData = {
-  userContacts: null,
+  user: null,
 
   userDataRequested: false,
 
@@ -42,7 +48,7 @@ const initialState: IData = {
   contactDeleteError: false,
 }
 
-export const UsersDataSlice = createSlice({
+export const UserDataSlice = createSlice({
   name: "UsersData",
   initialState,
   reducers: {
@@ -62,39 +68,38 @@ export const UsersDataSlice = createSlice({
       state.contactDeleteError = false;
     },
 
-    userFetchingSuccess(state, action: PayloadAction<IUserContact[]>) {
+    userFetchingSuccess(state, action: PayloadAction<IUser>) {
       state.userDataRequested = false;
       state.userFetchingSuccess = true;
       state.userFetchingError = false;
-      state.userContacts = action.payload;
+      if (!state.user) {
+        state.user = action.payload;
+      }
     },
     userFetchingError(state) {
       state.userDataRequested = false;
       state.userFetchingError = true;
     },
 
-    userAddingSuccess(state, action: PayloadAction<IUserContact>) {
+    userAddingSuccess(state, action: PayloadAction<IUserContact[]>) {
       state.userDataRequested = false;
       state.contactAddingSuccess = true;
       state.contactAddingError = false;
-      if (state.userContacts) {
-        state.userContacts = [...state.userContacts, action.payload];
+      if (state.user) {
+        state.user.contacts = action.payload;
       }
     },
     userAddingError(state) {
       state.userDataRequested = false;
       state.contactAddingError = true;
     },
-    userEdditingSuccess(state, action: PayloadAction<IUserContact>) {
+    userEdditingSuccess(state, action: PayloadAction<IUserContact[]>) {
       state.userDataRequested = false;
       state.contactEditSuccess = true;
       state.contactEditError = false;
-      if (state.userContacts) {
-        state.userContacts = state.userContacts?.map((el) => {
-          if (el.id !== action.payload.id) return el;
-          return action.payload;
-        })
-      } 
+      if (state.user) {
+        state.user.contacts = action.payload;
+      }
     },
     userEdditingError(state) {
       state.userDataRequested = false;
@@ -104,10 +109,8 @@ export const UsersDataSlice = createSlice({
       state.userDataRequested = false;
       state.contactDeleteSuccess = true;
       state.contactDeleteError = false;
-      if(state.userContacts) {
-        state.userContacts = state.userContacts.filter((el) => {
-          return el.id !== action.payload
-        })
+      if(state.user) {
+        state.user.contacts = action.payload;
       }
     },
     userDeletingError(state) {

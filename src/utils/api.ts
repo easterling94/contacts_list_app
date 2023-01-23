@@ -1,10 +1,11 @@
 import { collection, getDocs, addDoc, deleteDoc, updateDoc, doc } from '@firebase/firestore';
 import { db } from '../firebase-config';
-import { IUserContact } from '../services/reducers/users';
+import { getLocalStorage } from './storage';
 
 const BASE_URL = 'http://localhost:5001';
 const URL_CONTACTS = BASE_URL + '/contacts';
 const usersCollection = collection(db, 'users');
+const userId = getLocalStorage();
 
 const checkResponse = (res: any) => {
   if (res.ok) {
@@ -12,14 +13,6 @@ const checkResponse = (res: any) => {
   } else {
   }
 };
-
-
-interface FirebaseResponse {
-  contacts: IUserContact[],
-  name: string,
-  id: string,
-}
-
 
 export const getUserAPIFirebase = async () => {
   const data = await getDocs(usersCollection);
@@ -29,7 +22,7 @@ export const getUserAPIFirebase = async () => {
     contacts: fbResponse.contacts,
     id: el.id,
   }));
-  return result[0];
+  return result[0]; // в будущем будет использоваться filter по id документа из куки, чтобы искать в массиве того юзера, который авторизовался, пока что берется 0-ой элемент
 };
 
 export const addUserAPIFirebase = async (newUser:any) => {
@@ -37,32 +30,31 @@ export const addUserAPIFirebase = async (newUser:any) => {
   return newUser;
 }
 
-export const addContactAPIFirebase = async (userId: string, contact: any) => 
-{
-  const userDoc = doc(db, "users", userId)
-  await updateDoc(userDoc, contact)
-  return contact;
+export const addContactAPIFirebase = async (contacts: any) => {
+  if (!userId) {
+    alert('Пожалуйста, обновите приложение');
+    return
+  }
+  const userDoc = doc(db, "users", userId);
+  await updateDoc(userDoc, {"contacts": contacts})
 }
 
-export const deleteContactAPI = async (contactID: any) => {
-  const data = await fetch(`${URL_CONTACTS}/${contactID}`, {
-    method: "DELETE",
-    headers: {
-      'Content-type': 'application/json',
-    }
-  }).then(checkResponse);
-  return data;
+export const deleteContactAPI = async (contacts: any) => {
+  if (!userId) {
+    alert('Пожалуйста, обновите приложение');
+    return
+  }
+  const userDoc = doc(db, "users", userId);
+  await updateDoc(userDoc, {"contacts": contacts})
 }
 
-export const editContactAPI = async (contactID: any, contact: any) => {
-  const data = await fetch(`${URL_CONTACTS}/${contactID}`, {
-    method: "PUT", 
-    body: JSON.stringify(contact),
-    headers: {
-      'Content-type': 'application/json'
-    }
-  }).then(checkResponse);
-  return data;
+export const editContactAPI = async (contacts: any) => {
+  if (!userId) {
+    alert('Пожалуйста, обновите приложение');
+    return
+  }
+  const userDoc = doc(db, "users", userId);
+  await updateDoc(userDoc, {"contacts": contacts})
 }
 
 export const addContactAPI = async (contact: any) => {

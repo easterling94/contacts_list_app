@@ -1,9 +1,9 @@
-export const setLocalStorage = ():void => {
-  localStorage.setItem("user", "user")
+export const setLocalStorage = (userId: string): void => {
+  localStorage.setItem('userId', userId)
 }
 
-export const getLocalStorage = ():void => {
-  localStorage.getItem("user")
+export const getLocalStorage = () => {
+  return localStorage.getItem("userId")
 }
 
 export const setCookie = (): void => {

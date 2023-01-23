@@ -1,5 +1,5 @@
 import { AppDispatch } from "../store";
-import { UsersDataSlice } from "./users";
+import { UserDataSlice } from "./user";
 import { LoaderSlice } from './loader';
 import { 
   getUserAPIFirebase,
@@ -8,50 +8,51 @@ import {
   editContactAPI,
   deleteContactAPI,
 } from "../../utils/api";
+import { setLocalStorage } from '../../utils/storage';
 
-export const fetchUsers = () => async (dispatch: AppDispatch) => {
+export const fetchUser = () => async (dispatch: AppDispatch) => {
   try {
-    dispatch(UsersDataSlice.actions.dataRequesting());
+    dispatch(UserDataSlice.actions.dataRequesting());
     dispatch(LoaderSlice.actions.showLoader());
     const resFirebase = await getUserAPIFirebase();
-    dispatch(UsersDataSlice.actions.userFetchingSuccess(resFirebase.contacts))
+    setLocalStorage(resFirebase.id)
+    dispatch(UserDataSlice.actions.userFetchingSuccess(resFirebase))
   }
   catch {
-    dispatch(UsersDataSlice.actions.userFetchingError())
+    dispatch(UserDataSlice.actions.userFetchingError())
   }
 }
 
-export const addUser = (contact: any) => async (dispatch: AppDispatch) => {
+export const addContact = (contact: any) => async (dispatch: AppDispatch) => {
   try {
-    dispatch(UsersDataSlice.actions.dataRequesting());
+    dispatch(UserDataSlice.actions.dataRequesting());
     dispatch(LoaderSlice.actions.showLoader());
-    const res = await addContactAPI(contact);
-    // const res = await addContactAPIFirebase(contact);
-    dispatch(UsersDataSlice.actions.userAddingSuccess(res))
+    await addContactAPIFirebase(contact);
+    dispatch(UserDataSlice.actions.userAddingSuccess(contact))
   }
   catch {
-    dispatch(UsersDataSlice.actions.userAddingError())
+    dispatch(UserDataSlice.actions.userAddingError())
   }
 }
 
-export const editUser = (contactID: any, contact: any) => async (dispatch: AppDispatch) => {
+export const editContact = (contact: any) => async (dispatch: AppDispatch) => {
   try {
-    dispatch(UsersDataSlice.actions.dataRequesting());
+    dispatch(UserDataSlice.actions.dataRequesting());
     dispatch(LoaderSlice.actions.showLoader());
-    const res = await editContactAPI(contactID, contact);
-    dispatch(UsersDataSlice.actions.userEdditingSuccess(res))
+    await editContactAPI(contact);
+    dispatch(UserDataSlice.actions.userEdditingSuccess(contact))
   }
   catch {
-    dispatch(UsersDataSlice.actions.userEdditingError)
+    dispatch(UserDataSlice.actions.userEdditingError)
   }
 }
 
-export const deleteUser = (contactID: any) => async(dispatch: AppDispatch) => {
+export const deleteContact = (contact: any) => async(dispatch: AppDispatch) => {
   try {
-    dispatch(UsersDataSlice.actions.dataRequesting());
+    dispatch(UserDataSlice.actions.dataRequesting());
     dispatch(LoaderSlice.actions.showLoader());
-    const res = await deleteContactAPI(contactID);
-    dispatch(UsersDataSlice.actions.userDeletingSuccess(contactID))
+    await deleteContactAPI(contact);
+    dispatch(UserDataSlice.actions.userDeletingSuccess(contact))
   }
   catch {
 
