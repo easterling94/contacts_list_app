@@ -5,7 +5,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ErrorPage } from './pages/error-page/error-page';
 import { HomePage } from './pages/contacts/contacts';
 import { NoContactChosen } from './pages/contacts/no-contact-chosen';
-import { LoginPage } from './pages/login-page/login';
+import { RegistrationPage } from './pages/auths-page/registration';
+import { LoginPage } from './pages/auths-page/login-page';
 import { WelcomePage } from './pages/welcome-page/welcome-page';
 import { ContactInfo } from './pages/contacts/contacts';
 import { store } from './services/store';
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <LoginPage />,
+      },
+      {
+        path: '/registration',
+        element: <RegistrationPage />,
       },
       {
         path: '/profile',

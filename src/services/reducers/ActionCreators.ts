@@ -5,15 +5,15 @@ import {
   getUserAPIFirebase,
   firestoreAPI,
 } from "../../utils/api";
-import { setLocalStorageUser } from '../../utils/storage';
 
 export const fetchUser = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(UserDataSlice.actions.dataRequesting());
     dispatch(LoaderSlice.actions.showLoader());
     const resFirebase = await getUserAPIFirebase();
-    setLocalStorageUser(resFirebase.id)
-    dispatch(UserDataSlice.actions.userFetchingSuccess(resFirebase))
+    if (resFirebase) {
+      dispatch(UserDataSlice.actions.userFetchingSuccess(resFirebase))
+    }
   }
   catch {
     dispatch(UserDataSlice.actions.userFetchingError())
