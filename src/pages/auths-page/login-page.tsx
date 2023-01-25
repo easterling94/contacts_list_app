@@ -6,10 +6,15 @@ import { SyntheticEvent } from 'react';
 import { setLocalStorageArr } from '../../utils/storage';
 import { auth } from '../../firebase-config';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { fetchUser } from '../../services/reducers/ActionCreators';
+import { useAppDispatch } from '../../hooks/redux';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value);
@@ -19,6 +24,7 @@ export const LoginPage = () => {
   };
   const handleFormSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -29,14 +35,19 @@ export const LoginPage = () => {
               userId: uid,
             };
             setLocalStorageArr([test]);
-            console.log(uid);
+            dispatch(fetchUser());
+            navigate('/profile');
           }
         });
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error(errorCode, errorMessage);
+        if (errorCode === 'auth/wrong-password') {
+          alert('Пожалуйста, проверьте пароль');
+        }
+        if (errorCode === 'auth/user-not-found') {
+          alert('Такого пользователя несуществует');
+        }
       });
   };
   return (

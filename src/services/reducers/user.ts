@@ -117,5 +117,15 @@ export const UserDataSlice = createSlice({
       state.userDataRequested = false;
       state.contactDeleteError = true;
     },
+    userLogoutSuccess(state) {
+      state.user = null;
+      state.userDataRequested = false;
+    },
+    userLogoutError(state) {
+      
+    },
+    userCreateSuccess(state) {
+      console.log('user created')
+    }
   }
 })

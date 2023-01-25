@@ -3,13 +3,17 @@ import styles from './auths.module.css';
 import { useState } from 'react';
 import { Button } from '../../components/button/button';
 import { SyntheticEvent } from 'react';
-import { auth } from '../../firebase-config';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/redux';
+import { createUser, fetchUser } from '../../services/reducers/ActionCreators';
+import { useNavigate } from 'react-router-dom';
 
 export const RegistrationPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value);
@@ -22,17 +26,8 @@ export const RegistrationPage = () => {
   };
   const handleFormSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error(errorCode, errorMessage);
-      });
+    dispatch(createUser(email, password));
+    dispatch(fetchUser());
   };
   return (
     <div className={styles.wrapper}>
@@ -62,6 +57,9 @@ export const RegistrationPage = () => {
         <div className={styles.btns}>
           <Button type='submit' text='Регистрация' />
         </div>
+        <p className={styles.footer}>
+          Уже зарегистрированы? <Link to='/login'>Войти</Link>
+        </p>
       </form>
     </div>
   );

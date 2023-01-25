@@ -1,37 +1,31 @@
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { removeLocalStorageUser } from '../../utils/storage';
 import styles from './profile-page.module.css';
-// import { auth } from '../../firebase-config';
-import { getAuth, signOut, deleteUser } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../services/reducers/ActionCreators';
 
 export const ProfilePage = () => {
-  const auth = getAuth();
-  const userFirebase = auth.currentUser;
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const user = useAppSelector((state) => state.user.user);
-  const handleLogout = () => {
+
+  const handleLogout = async () => {
     removeLocalStorageUser();
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-      })
-      .catch((error) => {
-        // An error happened.
-      });
+    dispatch(logout());
+    navigate('/');
   };
   const handleDeleteUser = () => {
     removeLocalStorageUser();
-    console.log(auth);
-    console.log(userFirebase);
-    if (userFirebase) {
-      deleteUser(userFirebase)
-        .then(() => {
-          console.log('success');
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
+    // if (userFirebase) {
+    //   deleteUser(userFirebase)
+    //     .then(() => {
+    //       console.log('success');
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
+    // }
   };
   const handleUpdateUser = () => {
     removeLocalStorageUser();
