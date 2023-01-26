@@ -13,9 +13,14 @@ export interface IUser {
   contacts: IUserContact[] | null,
 }
 
+interface IUserOther {
+  displayName: string,
+  email: string,
+}
+
 interface IData {
   user: IUser | null,
-
+  userEmail: string | null,
   userDataRequested: boolean;
 
   userFetchingSuccess: boolean;
@@ -32,6 +37,7 @@ interface IData {
 }
 const initialState: IData = {
   user: null,
+  userEmail: null,
 
   userDataRequested: false,
 
@@ -49,7 +55,7 @@ const initialState: IData = {
 }
 
 export const UserDataSlice = createSlice({
-  name: "UsersData",
+  name: "UserData",
   initialState,
   reducers: {
     dataRequesting(state) {
@@ -80,7 +86,15 @@ export const UserDataSlice = createSlice({
       state.userDataRequested = false;
       state.userFetchingError = true;
     },
-
+    userFetchOtherInfoSuccess(state, action: PayloadAction<IUserOther>) {
+      state.userEmail = action.payload.email;
+      if(state.user) {
+        state.user.name = action.payload.displayName;
+      }
+    },
+    userFetchOtherInfoError() {
+      console.log('Обновление пользовательских данных произошло с ошибкой')
+    },
     userAddingSuccess(state, action: PayloadAction<IUserContact[]>) {
       state.userDataRequested = false;
       state.contactAddingSuccess = true;
@@ -119,13 +133,69 @@ export const UserDataSlice = createSlice({
     },
     userLogoutSuccess(state) {
       state.user = null;
+      state.userEmail = null;
+    
       state.userDataRequested = false;
+    
+      state.userFetchingSuccess = false;
+      state.userFetchingError = false;
+    
+      state.contactAddingSuccess = false;
+      state.contactAddingError = false;
+    
+      state.contactEditSuccess = false;
+      state.contactEditError = false;
+    
+      state.contactDeleteSuccess = false;
+      state.contactDeleteError = false;
     },
     userLogoutError(state) {
       
     },
+    userLoginSuccess(state) {
+      state.userDataRequested = false;
+    },
+    userLoginError(state) {
+      state.user = null;
+      state.userEmail = null;
+    
+      state.userDataRequested = false;
+    
+      state.userFetchingSuccess = false;
+      state.userFetchingError = false;
+    
+      state.contactAddingSuccess = false;
+      state.contactAddingError = false;
+    
+      state.contactEditSuccess = false;
+      state.contactEditError = false;
+    
+      state.contactDeleteSuccess = false;
+      state.contactDeleteError = false;
+    },
     userCreateSuccess(state) {
       console.log('user created')
-    }
+    },
+    userDeleteSuccess(state) {
+      state.user = null;
+      state.userEmail = null;
+    
+      state.userDataRequested = false;
+    
+      state.userFetchingSuccess = false;
+      state.userFetchingError = false;
+    
+      state.contactAddingSuccess = false;
+      state.contactAddingError = false;
+    
+      state.contactEditSuccess = false;
+      state.contactEditError = false;
+    
+      state.contactDeleteSuccess = false;
+      state.contactDeleteError = false;
+    },
+    userDeleteError() {
+      console.log('user delete error')
+    },
   }
 })

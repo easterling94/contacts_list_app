@@ -3,11 +3,8 @@ import styles from './auths.module.css';
 import { useState } from 'react';
 import { Button } from '../../components/button/button';
 import { SyntheticEvent } from 'react';
-import { setLocalStorageArr } from '../../utils/storage';
-import { auth } from '../../firebase-config';
-import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
-import { fetchUser } from '../../services/reducers/ActionCreators';
+import { useNavigate, Link } from 'react-router-dom';
+import { login } from '../../services/reducers/ActionCreators';
 import { useAppDispatch } from '../../hooks/redux';
 
 export const LoginPage = () => {
@@ -22,33 +19,10 @@ export const LoginPage = () => {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.currentTarget.value);
   };
-  const handleFormSubmit = (e: SyntheticEvent) => {
+  const handleFormSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            const uid = user.uid;
-            const test = {
-              userId: uid,
-            };
-            setLocalStorageArr([test]);
-            dispatch(fetchUser());
-            navigate('/profile');
-          }
-        });
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        if (errorCode === 'auth/wrong-password') {
-          alert('Пожалуйста, проверьте пароль');
-        }
-        if (errorCode === 'auth/user-not-found') {
-          alert('Такого пользователя несуществует');
-        }
-      });
+    await dispatch(login(email, password));
+    navigate('/profile');
   };
   return (
     <div className={styles.wrapper}>
@@ -71,6 +45,10 @@ export const LoginPage = () => {
         <div className={styles.btns}>
           <Button type='submit' text='Вход' />
         </div>
+        <p className={styles.footer}>
+          Не зарегистрированы?{' '}
+          <Link to='/registration'>Зарегистрироваться</Link>
+        </p>
       </form>
     </div>
   );

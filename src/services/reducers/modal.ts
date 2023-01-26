@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-export type TModalType = null | 'add' | 'edit' | 'delete';
+export type TModalType = null | 'add' | 'edit' | 'delete' | 'logout' | 'deleteUser';
 
 export interface IModalData {
   data: {

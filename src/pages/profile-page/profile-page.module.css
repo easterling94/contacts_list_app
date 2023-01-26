@@ -1,0 +1,15 @@
+.header {
+  text-align: center;
+}
+.form {
+  width: 50%;
+  margin: 0px auto;
+  min-width: 100px;
+}
+
+.btns {
+  max-width: 50%;
+  margin: 0px auto;
+  display: flex;
+  justify-content: space-around;
+}

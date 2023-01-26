@@ -5,11 +5,6 @@ import { Outlet, NavLink, useParams } from 'react-router-dom';
 import { IUserContact } from '../../services/reducers/user';
 import { ModalSlice } from '../../services/reducers/modal';
 import { IModalData, TModalType } from '../../services/reducers/modal';
-import { ModalOverlay } from '../../components/modal/modal-overlay';
-import { ModalDelete } from '../../components/modal/modal-delete';
-import { ModalEdit } from '../../components/modal/modal-edit';
-import { ModalNew } from '../../components/modal/modal-new';
-import { Loader } from '../../components/modal/loader';
 import { contactShortcut } from '../../hooks/functions';
 import { ErrorContact } from './error-contact';
 
@@ -160,36 +155,11 @@ export const ContactInfo = () => {
 };
 
 export const HomePage = () => {
-  const modal = useAppSelector((state) => state.modal);
-  const isLoaderShown = useAppSelector((state) => state.loader.isLoaderShown);
-
   return (
     <div className={styles.wrapper}>
       <ContactsList />
       <DragBar />
       <Outlet />
-      {modal.isModalOpened ? (
-        <ModalOverlay closeBtn={true}>
-          {modal.modalType === 'edit' ? (
-            <ModalEdit />
-          ) : modal.modalType === 'delete' ? (
-            <ModalDelete />
-          ) : modal.modalType === 'add' ? (
-            <ModalNew />
-          ) : (
-            ''
-          )}
-        </ModalOverlay>
-      ) : (
-        ''
-      )}
-      {isLoaderShown ? (
-        <ModalOverlay closeBtn={false}>
-          <Loader />
-        </ModalOverlay>
-      ) : (
-        ''
-      )}
     </div>
   );
 };

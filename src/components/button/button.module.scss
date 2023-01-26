@@ -21,7 +21,8 @@ $buttonWithHover: rgb(125, 15, 161);
 }
 
 .btn {
-  width: 100px;
+  min-width: 100px;
+  max-width: 150px;
   margin: 10px auto 0px;
   height: 40px;
   font-weight: 700;

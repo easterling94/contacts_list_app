@@ -5,14 +5,14 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ErrorPage } from './pages/error-page/error-page';
 import { HomePage } from './pages/contacts/contacts';
 import { NoContactChosen } from './pages/contacts/no-contact-chosen';
-import { RegistrationPage } from './pages/auths-page/registration';
+import { RegistrationPage } from './pages/auths-page/registration-page';
 import { LoginPage } from './pages/auths-page/login-page';
 import { WelcomePage } from './pages/welcome-page/welcome-page';
 import { ContactInfo } from './pages/contacts/contacts';
 import { store } from './services/store';
 import { Provider } from 'react-redux';
 import { ProfilePage } from './pages/profile-page/profile-page';
-
+import { ProtectedRoute } from './components/protected-route/protected-route';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -29,7 +29,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'home/',
-        element: <HomePage />,
+        element: (
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        ),
         children: [
           {
             path: ':contactShortcut',
@@ -51,7 +55,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/profile',
-        element: <ProfilePage />,
+        element: (
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
