@@ -24,7 +24,7 @@ export const ModalDeleteUser = () => {
     <form onSubmit={onSubmit}>
       <div className={styles.header}>{modalData?.title}</div>
       <div className={styles.btns}>
-        <Button text='Удалить' type='submit' />
+        <Button text='Удалить' type='submit' look='delete' />
       </div>
     </form>
   );

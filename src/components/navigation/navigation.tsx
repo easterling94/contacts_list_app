@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux';
 import styles from './navigation.module.scss';
 
@@ -6,17 +6,32 @@ export const Navigation = () => {
   const user = useAppSelector((state) => state.user.user);
   return (
     <nav className={styles.navigation}>
-      <Link className={styles.link} to='/home'>
-        Главная
-      </Link>
+      <NavLink
+        className={({ isActive }) =>
+          isActive ? `${styles.linkActive}` : `${styles.linkNotActive}`
+        }
+        to='/contacts'
+      >
+        Контакты
+      </NavLink>
       {user ? (
-        <Link className={styles.link} to='profile'>
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? `${styles.linkActive}` : `${styles.linkNotActive}`
+          }
+          to='profile'
+        >
           Профиль
-        </Link>
+        </NavLink>
       ) : (
-        <Link className={styles.link} to='login'>
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? `${styles.linkActive}` : `${styles.linkNotActive}`
+          }
+          to='login'
+        >
           Войти
-        </Link>
+        </NavLink>
       )}
     </nav>
   );

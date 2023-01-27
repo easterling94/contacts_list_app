@@ -24,7 +24,7 @@ export const LogOut = () => {
     <form onSubmit={onSubmit}>
       <div className={styles.header}>{modalData?.title}</div>
       <div className={styles.btns}>
-        <Button text='Выйти' type='submit' />
+        <Button text='Выйти' type='submit' look='logout' />
       </div>
     </form>
   );

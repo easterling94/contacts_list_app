@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ErrorPage } from './pages/error-page/error-page';
-import { HomePage } from './pages/contacts/contacts';
+import { ContactsMain } from './pages/contacts/contacts';
 import { NoContactChosen } from './pages/contacts/no-contact-chosen';
 import { RegistrationPage } from './pages/auths-page/registration-page';
 import { LoginPage } from './pages/auths-page/login-page';
@@ -28,10 +28,10 @@ const router = createBrowserRouter([
         element: <WelcomePage />,
       },
       {
-        path: 'home/',
+        path: 'contacts/',
         element: (
           <ProtectedRoute>
-            <HomePage />
+            <ContactsMain />
           </ProtectedRoute>
         ),
         children: [

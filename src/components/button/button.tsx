@@ -6,21 +6,24 @@ interface IButton {
   buttonFunction?: (e: SyntheticEvent) => void;
   text: string;
   type: 'reset' | 'submit' | 'button';
+  look: 'reset' | 'submit' | 'delete' | 'logout';
 }
 
-export const Button: FC<IButton> = ({ buttonFunction, text, type }) => {
+export const Button: FC<IButton> = ({ buttonFunction, text, type, look }) => {
   return (
     <button
       className={
         styles.btn +
         ' ' +
         `${
-          type === 'reset'
+          look === 'reset'
             ? styles.reset
-            : type === 'submit'
+            : look === 'submit'
             ? styles.submit
-            : type === 'button'
-            ? styles.button
+            : look === 'logout'
+            ? styles.logout
+            : look === 'delete'
+            ? styles.delete
             : ''
         }`
       }

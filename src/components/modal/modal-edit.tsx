@@ -95,8 +95,13 @@ export const ModalEdit = () => {
         onChange={phoneChange}
       />
       <div className={styles.btns}>
-        <Button text='Сбросить' type='reset' buttonFunction={onReset} />
-        <Button text='Сохранить' type='submit' />
+        <Button
+          text='Сбросить'
+          type='reset'
+          buttonFunction={onReset}
+          look='reset'
+        />
+        <Button text='Сохранить' type='submit' look='submit' />
       </div>
     </form>
   );

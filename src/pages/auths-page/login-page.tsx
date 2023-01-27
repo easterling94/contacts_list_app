@@ -43,7 +43,7 @@ export const LoginPage = () => {
           onChange={handlePasswordChange}
         />
         <div className={styles.btns}>
-          <Button type='submit' text='Вход' />
+          <Button type='submit' text='Вход' look='submit' />
         </div>
         <p className={styles.footer}>
           Не зарегистрированы?{' '}

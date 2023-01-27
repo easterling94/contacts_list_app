@@ -13,3 +13,14 @@
   display: flex;
   justify-content: space-around;
 }
+
+@media (width <= 900px) {
+  .form {
+    width: 90%;
+  }
+  .btns {
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+  }
+}

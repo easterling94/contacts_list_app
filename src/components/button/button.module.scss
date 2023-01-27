@@ -4,8 +4,11 @@ $submitWithHover: rgb(33, 143, 33);
 $resetNoHover: rgb(40, 117, 168);
 $resetWithHover: rgb(33, 92, 161);
 
-$buttonNoHover: rgb(132, 40, 168);
-$buttonWithHover: rgb(125, 15, 161);
+$logoutNoHover: rgb(132, 40, 168);
+$logoutWithHover: rgb(125, 15, 161);
+
+$deleteNoHover: rgb(224, 50, 80);
+$deleteWithHover: rgb(217, 25, 73);
 
 @mixin transition($x...) {
   transition: $x;
@@ -33,6 +36,15 @@ $buttonWithHover: rgb(125, 15, 161);
   @include transition(box-shadow 1s ease-out, background-color 1s ease-out) ;
 }
 
+@media (width <= 900px) {
+  .btn {
+    width: 200px;
+    min-height: 40px;
+    font-weight: normal;
+    font-size: medium;
+  }
+}
+
 .reset {
   @include hover($resetNoHover, $resetWithHover)
 }
@@ -41,6 +53,10 @@ $buttonWithHover: rgb(125, 15, 161);
   @include hover($submitNoHover, $submitWithHover)
 }
 
-.button {
-  @include hover($buttonNoHover, $buttonWithHover)
+.logout {
+  @include hover($logoutNoHover, $logoutWithHover)
+}
+
+.delete {
+  @include hover($deleteNoHover, $deleteWithHover)
 }

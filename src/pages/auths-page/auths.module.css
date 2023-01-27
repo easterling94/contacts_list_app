@@ -13,3 +13,9 @@
 .footer {
   text-align: center;
 }
+
+@media (width <= 500px) {
+  .form {
+    width: 90%;
+  }
+}

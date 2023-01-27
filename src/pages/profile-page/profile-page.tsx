@@ -72,19 +72,22 @@ export const ProfilePage = () => {
       </form>
       <div className={styles.btns}>
         <Button
-          text='Поменять данные пользователя'
+          text='Поменять данные'
           type='submit'
           buttonFunction={handleUpdateUser}
+          look='submit'
         />
         <Button
           text='Выйти из системы'
           type='button'
           buttonFunction={handleLogout}
+          look='logout'
         />
         <Button
           text='Удалить пользователя'
           type='button'
           buttonFunction={handleDeleteUser}
+          look='delete'
         />
       </div>
     </div>

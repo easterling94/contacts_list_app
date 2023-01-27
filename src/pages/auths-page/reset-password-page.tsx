@@ -25,7 +25,7 @@ export const ResetPasswordPage = () => {
           onChange={handlePasswordChange}
         />
         <div className={styles.btns}>
-          <Button type='submit' text='Восстановить' />
+          <Button type='submit' text='Восстановить' look='submit' />
         </div>
       </form>
     </div>

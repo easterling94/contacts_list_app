@@ -3,6 +3,11 @@ import { db } from '../firebase-config';
 import { getLocalStorageKey, setLocalStorageArr, removeLocalStorageUser } from './storage';
 import { getAuth, signOut, deleteUser, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateEmail, updateProfile } from 'firebase/auth';
 
+const ERROR_CODE_BAD_PASSWORD = 'auth/weak-password';
+const ERROR_CODE_USER_NOT_FOUND = 'auth/user-not-found';
+const ERROR_CODE_USER_IN_USE = 'auth/email-already-in-use';
+const ERROR_CODE_WRONG_PASSWORD = 'auth/wrong-password';
+
 const createUserCollection = async (userId: string) => {
   const usersCollection = doc(db, 'users', userId);
   const payload = {
@@ -97,11 +102,12 @@ export const loginAPI = async (email: string, password: string) => {
     })
   .catch((error) => {
     const errorCode = error.code;
-    if (errorCode === 'auth/wrong-password') {
+    if (errorCode === ERROR_CODE_WRONG_PASSWORD) {
       alert('Пожалуйста, проверьте пароль');
     }
-    if (errorCode === 'auth/user-not-found') {
-      alert('Такого пользователя несуществует');
+    if (errorCode === ERROR_CODE_USER_NOT_FOUND) {
+      removeLocalStorageUser('userId')
+      alert('Такого пользователя не существует');
     }
   });
 }
@@ -114,9 +120,13 @@ export const createUserAPI = async (email: string, password: string) => {
     })
     .catch((error) => {
       const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error(errorCode, errorMessage)
-      return null
+      console.log(errorCode)
+      if(errorCode === ERROR_CODE_BAD_PASSWORD) {
+        alert('Пароль должен содержать хотя бы 6 символов!')
+      }
+      if(errorCode === ERROR_CODE_USER_IN_USE) {
+        alert('Такой пользователь уже существует!')
+      }
     });
   if(userId) {
     const test = {

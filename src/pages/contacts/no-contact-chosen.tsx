@@ -1,4 +1,4 @@
-import styles from './home.module.scss';
+import styles from './contacts.module.scss';
 
 export const NoContactChosen = () => {
   return (

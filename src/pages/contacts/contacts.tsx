@@ -1,15 +1,14 @@
-import styles from './home.module.scss';
+import styles from './contacts.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { ContactListSlice } from '../../services/reducers/contact-list';
 import { Outlet, NavLink, useParams } from 'react-router-dom';
 import { IUserContact } from '../../services/reducers/user';
 import { ModalSlice } from '../../services/reducers/modal';
 import { IModalData, TModalType } from '../../services/reducers/modal';
 import { contactShortcut } from '../../hooks/functions';
 import { ErrorContact } from './error-contact';
+import { useState, useEffect } from 'react';
 
 const ContactsList = () => {
-  const width = useAppSelector((state) => state.drag.width);
   const contacts = useAppSelector((state) => state.user.user?.contacts);
   const { openModal, fillModal } = ModalSlice.actions;
   const dispatch = useAppDispatch();
@@ -30,14 +29,14 @@ const ContactsList = () => {
   };
 
   return (
-    <section className={styles.sectionLeft} style={{ width: width }}>
+    <section className={styles.sectionLeft}>
       <nav className={styles.contactList}>
         <ul>
           {contacts?.length ? (
             contacts.map((el) => (
               <li key={el.phone}>
                 <NavLink
-                  to={`/home/${contactShortcut(el.name)}`}
+                  to={`/contacts/${contactShortcut(el.name)}`}
                   className={({ isActive }) =>
                     isActive ? `${styles.active}` : undefined
                   }
@@ -55,39 +54,6 @@ const ContactsList = () => {
         Новый контакт
       </button>
     </section>
-  );
-};
-
-const DragBar = () => {
-  /*
-    Не удалось избавиться от not-allowed курсора при переносе разделителя над блоками ContactsList и ContactInfo, надо подумать над другим способом реализовать изменение ширины блоков
-  */
-
-  const { changeWidth } = ContactListSlice.actions;
-  const dispatch = useAppDispatch();
-
-  const handleDragStart = (e: React.DragEvent): void => {
-    e.dataTransfer.setDragImage(new Image(0, 0), 0, 0);
-  };
-  const handleDrag = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ): void => {
-    dispatch(changeWidth(e.clientX));
-  };
-  const handleDragEnd = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ): void => {
-    dispatch(changeWidth(e.clientX));
-  };
-
-  return (
-    <div
-      className={styles.drag}
-      draggable={true}
-      onDragStart={(e) => handleDragStart(e)}
-      onDrag={(e) => handleDrag(e)}
-      onDragEnd={(e) => handleDragEnd(e)}
-    ></div>
   );
 };
 
@@ -154,11 +120,15 @@ export const ContactInfo = () => {
   );
 };
 
-export const HomePage = () => {
+export const ContactsMain = () => {
+  const [width, setWidth] = useState<null | number>(null);
+  useEffect(() => {
+    const innerWidth = window.innerWidth;
+    setWidth(innerWidth);
+  }, []);
   return (
     <div className={styles.wrapper}>
       <ContactsList />
-      <DragBar />
       <Outlet />
     </div>
   );

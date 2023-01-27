@@ -84,8 +84,13 @@ export const ModalNew = () => {
         onChange={phoneChange}
       />
       <div className={styles.btns}>
-        <Button text='Сбросить' type='reset' buttonFunction={onReset} />
-        <Button text='Создать' type='submit' />
+        <Button
+          text='Сбросить'
+          type='reset'
+          buttonFunction={onReset}
+          look='reset'
+        />
+        <Button text='Создать' type='submit' look='submit' />
       </div>
     </form>
   );
