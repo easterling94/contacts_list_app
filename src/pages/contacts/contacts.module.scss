@@ -14,13 +14,31 @@ $test: -webkit-fill-available;
   flex-direction: column;
   justify-content: space-between;
   background-color: $navBackground;
-  max-width: 400px;
-  min-width: 250px;
+  width: 250px;
   padding: 10px;
+}
+@media (width <= 500px) {
+  .sectionLeft {
+    position: relative;
+    width: 100%;
+  }
+}
+
+.sectionLeftHide {
+  display: none;
 }
 
 .sectionRight {
   margin-left: 15px;
+}
+@media (width <= 500px) {
+  .sectionRight {
+    width: 100%;
+  }
+}
+
+.sectionRightHide {
+  display: none;
 }
 
 .contactList {
@@ -88,6 +106,18 @@ $test: -webkit-fill-available;
 .btnNew {
   @include button();
   color: #a80cb6;
+}
+
+@media (width <= 500px) {
+  .btnNew {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    line-height: 0;
+    padding: 20px 10px;
+    font-size: 2em;
+    font-weight: 900;
+  }
 }
 
 .btnEdit {

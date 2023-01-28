@@ -25,9 +25,10 @@ $deleteWithHover: rgb(217, 25, 73);
 
 .btn {
   min-width: 100px;
-  max-width: 150px;
+  max-width: 130px;
   margin: 10px auto 0px;
-  height: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   font-weight: 700;
   border: 0px;
   border-radius: 5px;
@@ -38,8 +39,6 @@ $deleteWithHover: rgb(217, 25, 73);
 
 @media (width <= 900px) {
   .btn {
-    width: 200px;
-    min-height: 40px;
     font-weight: normal;
     font-size: medium;
   }

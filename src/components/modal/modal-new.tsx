@@ -32,7 +32,9 @@ export const ModalNew = () => {
       dispatch(closeModal());
 
       if (modalData.modalData?.data.name) {
-        navigate(`/home/${contactShortcut(modalData.modalData?.data.name)}`);
+        navigate(
+          `/contacts/${contactShortcut(modalData.modalData?.data.name)}`
+        );
       }
     }
   };

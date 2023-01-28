@@ -84,7 +84,7 @@ export const ProfilePage = () => {
           look='logout'
         />
         <Button
-          text='Удалить пользователя'
+          text='Удалить профиль'
           type='button'
           buttonFunction={handleDeleteUser}
           look='delete'

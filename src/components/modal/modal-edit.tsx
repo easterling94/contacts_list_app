@@ -40,7 +40,9 @@ export const ModalEdit = () => {
 
         dispatch(editContact(newContactList));
         if (modalData.modalData?.data.name) {
-          navigate(`/home/${contactShortcut(modalData.modalData?.data.name)}`);
+          navigate(
+            `/contacts/${contactShortcut(modalData.modalData?.data.name)}`
+          );
         }
         dispatch(closeModal());
       }

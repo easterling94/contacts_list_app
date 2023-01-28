@@ -26,7 +26,7 @@ export const ModalDelete = () => {
 
       dispatch(deleteContact(newContactList));
       dispatch(closeModal());
-      navigate('/home');
+      navigate('/contacts');
     }
   };
   return (

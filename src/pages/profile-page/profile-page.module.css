@@ -19,7 +19,12 @@
     width: 90%;
   }
   .btns {
-    max-width: 50%;
+    max-width: 90%;
+  }
+}
+
+@media (width <= 600px) {
+  .btns {
     display: flex;
     flex-direction: column;
   }
