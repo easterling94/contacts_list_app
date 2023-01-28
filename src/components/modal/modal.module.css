@@ -16,6 +16,21 @@
   background-color: white;
   padding: 40px;
 }
+@media (width <= 700px) {
+  .background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wrapper {
+    margin: initial;
+  }
+}
+@media (width <=500px) {
+  .wrapper {
+    width: 250px;
+  }
+}
 .header {
   font-size: 150%;
   text-align: center;
