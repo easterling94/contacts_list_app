@@ -13,6 +13,7 @@ import { store } from './services/store';
 import { Provider } from 'react-redux';
 import { ProfilePage } from './pages/profile-page/profile-page';
 import { ProtectedRoute } from './components/protected-route/protected-route';
+import { basename } from 'path';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

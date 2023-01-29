@@ -6,7 +6,7 @@ interface ILoader {
 }
 
 const initialState: ILoader = {
-  counter: 4,
+  counter: 2,
   isLoaderShown: false,
 };
 

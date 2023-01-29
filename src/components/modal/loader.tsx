@@ -9,14 +9,12 @@ export const Loader = () => {
   const { changeCounter, closeLoader } = LoaderSlice.actions;
 
   useEffect(() => {
-    if (loaderTimer > 1) {
+    if (loaderTimer >= 1) {
       setTimeout(() => {
         dispatch(changeCounter());
       }, 1000);
     } else {
-      return () => {
-        dispatch(closeLoader());
-      };
+      dispatch(closeLoader());
     }
     return;
   }, [loaderTimer]);
