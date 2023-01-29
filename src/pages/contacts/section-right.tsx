@@ -1,6 +1,6 @@
 import styles from './contacts.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { IUserContact } from '../../services/reducers/user';
 import { ModalSlice } from '../../services/reducers/modal';
 import { IModalData, TModalType } from '../../services/reducers/modal';
@@ -12,6 +12,7 @@ export const SectionRight = () => {
   const { openModal, fillModal } = ModalSlice.actions;
   const contacts = useAppSelector((state) => state.user.user?.contacts);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const userShortcut = useParams();
   const contact: IUserContact | undefined = contacts?.filter(
     (el) => contactShortcut(el.name) === userShortcut.contactShortcut
@@ -41,6 +42,10 @@ export const SectionRight = () => {
     dispatch(fillModal(null));
   };
 
+  const handleBtnBack = () => {
+    navigate('/contacts');
+  };
+
   return (
     <>
       {contact ? (
@@ -51,6 +56,13 @@ export const SectionRight = () => {
               : styles.sectionRightHide
           }
         >
+          {state === 'right' ? (
+            <button className={styles.btnBack} onClick={handleBtnBack}>
+              &larr;
+            </button>
+          ) : (
+            ''
+          )}
           <h1>{contact?.name}</h1>
           <h2>{contact?.phone}</h2>
           <div className={styles.buttons}>

@@ -33,6 +33,7 @@ $test: -webkit-fill-available;
 }
 @media (width <= 500px) {
   .sectionRight {
+    position: relative;
     width: 100%;
   }
 }
@@ -128,4 +129,16 @@ $test: -webkit-fill-available;
 .btnDelete {
   @include button();
   color: #ff394a;
+}
+
+.btnBack {
+  @include button();
+  color: #a80cb6;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  line-height: 0;
+  padding: 20px 10px;
+  font-size: 2em;
+  font-weight: 900;
 }
