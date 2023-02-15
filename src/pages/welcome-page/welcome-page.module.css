@@ -1,8 +1,18 @@
+.wrapper {
+  width: 100%;
+  background-color: white;
+  height: calc(100vh - 58px);
+}
 .section {
-  width: 60%;
-  margin: 50px auto;
   font-size: 1.2rem;
+  width: 60%;
+  margin: 0px auto;
   text-align: center;
+
+}
+.header {
+  margin: 0px;
+  padding-top: calc((100vh - 58px)/10);
 }
 .section span {
   font-weight: bold;

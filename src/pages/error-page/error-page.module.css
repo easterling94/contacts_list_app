@@ -1,8 +1,13 @@
 .wrapper {
+  height: 100vh;
   text-align: center;
+  color: white;
+
 }
 
 .header {
+  padding-top: calc((100vh - 58px)/5);
+  margin: 0px;
   font-size: 4rem;
   font-weight: 700;
 }

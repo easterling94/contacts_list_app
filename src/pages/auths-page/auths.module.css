@@ -1,4 +1,10 @@
+.wrapper {
+  background-color: white;
+  height: calc(100vh - 58px);
+}
 .title {
+  margin: 0px;
+  padding-top: calc((100vh - 58px)/5);
   text-align: center;
 }
 .form {
