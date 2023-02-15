@@ -1,5 +1,11 @@
+.wrapper {
+  background-color: white;
+  height: calc(100vh - 58px);
+}
 .header {
+  margin: 0px;
   text-align: center;
+  padding-top: calc((100vh - 58px)/5);
 }
 .form {
   width: 50%;
